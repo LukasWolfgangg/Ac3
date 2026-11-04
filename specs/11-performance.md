@@ -14,7 +14,7 @@ Rudder load (since 28 Oct 2026): the T-foil force that balances pitch at each sp
 
 All results are for the chosen case: 2.80 kg, 0.44 m2, E226 foil, reach 250 mm, steel wet arm 22 mm x 18% wetted over 135 mm, carbon upper arm 40 mm x 20% (dry, so it adds no drag), rudder blade 34 mm x 17% wetted over 136 mm (220 mm below the hull, 84 mm of it in air at the design ride).
 
-**The scripts that produced these numbers are in the Simulation & Analysis folder** (core VPP engine opt.py; hybrid-arm structure steel.py/steel2.py/steel3.py; the chosen-case sweep r250.py/r250b.py/r250c.py; the top-reach structural basis top_reach.py; doc-figure generator docnums.py; see that folder's README for what each one does).
+**The scripts that produced these numbers are in the Simulation & Analysis folder** (core VPP engine opt.py; hybrid-arm structure steel.py/steel2.py/steel3.py; the chosen-case sweep r250.py/r250c.py; the top-reach structural basis top_reach.py; doc-figure generator docnums.py; see that folder's README for what each one does).
 
 ## Results
 
