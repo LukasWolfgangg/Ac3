@@ -30,6 +30,7 @@ Run: python3 flight_sim_v2.py  (needs foil_load_calculator.py in the same folder
 Requires: matplotlib
 """
 
+import os
 import math
 import matplotlib
 matplotlib.use("Agg")
@@ -191,7 +192,7 @@ if __name__ == "__main__":
         fontsize=10,
     )
     fig.tight_layout(rect=[0, 0, 1, 0.95])
-    fig.savefig("/home/claude/flight_sim_v2_comparison.png", dpi=130)
+    fig.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)), "flight_sim_v2_comparison.png"), dpi=130)
     print("Saved plot to flight_sim_v2_comparison.png")
     print(f"\nTrim AoA at cruise speed: {alpha_trim_reported:.2f} deg "
           "(this is the flap's steady baseline position -- the PID output above is added on top of it)")
