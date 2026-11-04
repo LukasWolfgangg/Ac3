@@ -37,10 +37,10 @@ The arm column is the 135 mm wetted steel run. Foil and T-foil drag are lower th
 
 | Speed | Foil (incl. induced) | Arm | Rudder blade | Rudder T-foil | Total |
 |---|---|---|---|---|---|
-| 6.5 kt | 1.43 | 0.38 | 0.44 | 0.25 | 2.50 |
-| 10 kt | 1.77 | 0.79 | 0.81 | 0.50 | 3.86 |
-| 12 kt | 2.09 | 1.02 | 1.07 | 0.63 | 4.81 |
-| 14.5 kt | 2.63 | 1.33 | 1.44 | 0.78 | 6.20 |
+| 6.5 kt | 1.41 | 0.38 | 0.50 | 0.25 | 2.54 |
+| 10 kt | 1.76 | 0.79 | 0.93 | 0.49 | 3.97 |
+| 12 kt | 2.09 | 1.02 | 1.22 | 0.63 | 4.95 |
+| 14.5 kt | 2.63 | 1.33 | 1.65 | 0.78 | 6.40 |
 
 For comparison, the old struts (36 mm E864 arm, 30 mm E864 blade, both 38.8% thick) would add 3.71 N and 1.56 N at 10 kt, and 7.08 N and 2.98 N at 14.5 kt. E226 operating points with the pitch-balance load (NeuralFoil section, effective angle of attack): 6.5 kt Re 134k, CL 0.42, 2.1 deg, CD 0.012; 10 kt Re 206k, CL 0.19, 0.5 deg, CD 0.0093; 12 kt Re 247k, CL 0.14, about 0.1 deg, CD 0.0082; 14.5 kt Re 298k, CL 0.10, 0.0 deg, CD 0.0074 (E817: CD 0.022 / 0.019 / 0.017 / 0.014).
 
