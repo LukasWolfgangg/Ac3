@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 .venv/
+scripts/*_out.json
+scripts/r250.json
