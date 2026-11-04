@@ -139,14 +139,14 @@ def measured_cl(lift_n, speed_mps, area_m2, rho=RHO_FRESHWATER):
     return lift_n / (0.5 * rho * speed_mps ** 2 * area_m2)
 
 
-# ----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # Drag -- profile + induced only. This is a FLOOR, not a full prediction:
 # it deliberately excludes wave-making drag (see drag_force_range()'s
 # docstring), which can be a real, sometimes dominant contributor for a
 # lifting surface running near the free surface, and which nobody has a
 # clean hand-calc for. Use this range to sanity-check the tow test's
 # horizontal-line reading, not to replace it.
-# ----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 
 def skin_friction_coefficient(re, flow="turbulent"):
     """Flat-plate skin friction coefficient, one side.
