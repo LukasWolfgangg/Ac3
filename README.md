@@ -16,7 +16,7 @@ What's simulatable before cutting any material, and what isn't. Everything here 
 - steel.py — the hybrid-arm structural and drag core: steel_sect() (torsion/bending of the solid steel section), path_from_foil() and split_int() (arm-path geometry and the steel/carbon split), hybrid() (the combined structural+drag function reported in Design & Specs section 8; design moment 1.30 × (weight + rudder downforce) × reach, with the top-reach structural rudder load opt.RUD_STRUCT × weight since 29 Oct 2026), and the MAT dict (17-4PH H1025, 316L annealed properties). Wetted, the arm length below the waterline at the design ride, is 135 mm: the whole straight steel run (28 Sep 2026; was 247 mm with the joint at 280 mm).
 - steel2.py — adds fRe(), the NeuralFoil-derived Reynolds-number correction to the strut drag model for the thin sections, and sweep(), a search over hybrid-arm candidates (chord/thickness options).
 - steel3.py — CfgH, a Cfg subclass with the hybrid-arm drag substituted in, and best_h(), its optimizer.
-- strutopt.py — blade_check() (rudder blade structural check) and search() (an earlier arm+blade drag/mass optimizer, superseded by the r250*.py scripts below; kept because r250b.py imports its blade_check()).
+- strutopt.py — blade_check() (rudder blade structural check) and search() (an earlier arm+blade drag/mass optimizer, superseded by the r250*.py scripts below).
 - arm.py — loads the traced Foilarm_v2 arm-path points from arm_pts.csv (100-point resample of the original 716-point trace; reproduces the full trace's path integrals to <0.03%, well inside the ±10 mm tracing tolerance) and derives the path length and geometry used by steel.py/struts2.py.
 - arm_pts.csv — the traced arm-path data itself (x, z in mm, pivot end to foil line).
 - struts2.py — strut/arm drag sweep using the real traced arm path (via arm.py).
@@ -24,13 +24,12 @@ What's simulatable before cutting any material, and what isn't. Everything here 
 **Chosen-case sweeps (produce the numbers in Design & Specs section 11)**
 
 - r250.py — best_hyb()/mk2(): sweeps weight and sail-area candidates at the 250 mm reach cap. Decision record from 20 Sep 2026: best_hyb() still defaults to the old 280 mm joint, so its output no longer describes the current arm; r250c.py imports it for the shared classes only.
-- r250b.py — candidate table at 2.8 kg / 250 mm across steel chord/thickness options, with the rudder blade checked via strutopt.blade_check(). Decision record at the old 280 mm joint.
 - r250c.py — the chosen-case script. Running this reproduces the exact numbers in Design & Specs section 11 (drag breakdown, results table, sensitivity, capped-vs-uncapped, carbon-only comparison) for the current design: steel-to-carbon joint and wetted arm length at 135 mm (updated and re-run 28 Sep 2026). The weight and sail scan is sail_rescan.py.
 - docnums.py — generates the smaller doc-ready figures scattered through Design & Specs and Foil Arm Mechanisms: fixed-element mass, arm path length at different reaches, twist-at-speed table, heel-cap binding true wind speed, steel tang mass. Updated 28 Sep 2026 for the E226 pitching moment and the 135 mm joint.
 
 **Flap re-check (22 Sep 2026)**
 
-- flap_recheck.py — the flap hinge-moment and local-twist re-check at the 2.80 kg design load (Foil Arm Mechanisms section 2a). Recomputes the hinge moment directly and cross-checks it against the load implied by the original, lighter-load figure; builds the real open thin-wall torsion constant from the actual E817 flap-segment shell contour at 4–7 plies; and evaluates the two twist fixes (6-ply shell vs. a third spring pair at the flap center). Imports e817.py. Record of the E817 check; the E226 flap is re-checked in flap_steel_e226.py.
+- flap_recheck.py — the flap hinge-moment and local-twist re-check at the 2.80 kg design load (Foil Arm Mechanisms section 2a). Recomputes the hinge moment directly and cross-checks it against the load implied by the original, lighter-load figure; builds the real open thin-wall torsion constant from the actual E817 flap-segment shell contour at 4–7 plies; and evaluates the two twist fixes (6-ply shell vs. a third spring pair at the flap center). Imports e817.py. Record of the E817 check; the E226 flap re-check (flap_steel_e226.py) was removed from the repo on 4 Nov 2026; it is in git history before the removal commit.
 
 **Older, placeholder-input tools (kept for reference, not currently authoritative)**
 
@@ -53,7 +52,7 @@ Real foil section data at the actual Reynolds numbers now comes from foil.tools/
 
 A velocity-prediction-style balance (boat speed against wind angle, sail force against foil, strut, rudder and hull drag, with the righting moment as the limit on side force) was done on 20 Sep 2026 to set the weight, sail area and strut sizes. **Its results and method are in Design & Specs section 11.** The scripts that produced it are in this folder (opt.py, steel.py/steel2.py/steel3.py, r250.py/r250b.py/r250c.py, docnums.py — see above), so the numbers can be regenerated from Drive directly: run r250c.py for the chosen-case results.
 
-27 Sep 2026 additions: raised_arm_real.py / raised_arm_vpp.py (raised windward arm righting moment), pivot_offset.py (pivot at 86% of the half-beam; a decision record at the 280 mm joint), sail_rescan.py (weight and sail scan), foil_study.py / foil3d.py (main foil section and planform, 3D check), flap_steel_e226.py and cst.py (flap and steel element from the exact E226/E817 shapes). opt.py uses the E226 section table and the 101.5 mm pivot offset; struts2.py's M14 is the E226 pitching moment (0.29 Nm).
+27 Sep 2026 additions: raised_arm_real.py / raised_arm_vpp.py (raised windward arm righting moment), sail_rescan.py (weight and sail scan), foil3d.py (3D check of the main foil section and planform), cst.py (exact E226/E817 shapes). opt.py uses the E226 section table and the 101.5 mm pivot offset; struts2.py's M14 is the E226 pitching moment (0.29 Nm).
 
 28 Sep 2026: steel.py, r250c.py, sail_rescan.py, docnums.py, raised_arm_real.py, raised_arm_vpp.py and foil3d.py were updated for the 135 mm joint and re-run (foil3d.py's E817 drag table was also fixed: it had been copying opt.py's table, which is now E226). These seven reproduce the current numbers in Design & Specs sections 3, 8 and 11. The other scripts are decision records run against earlier states of the design; re-running them now gives numbers for the current arm, not the ones they were written for.
 
