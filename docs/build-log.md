@@ -14,3 +14,9 @@ Re-ran r250c.py (chosen case, 2.80 kg, 0.44 m2, 135 mm wetted arm, 136 mm wetted
 | 14.5 kt | 1.44 -> 1.65 N | 6.20 -> 6.40 N | none |
 
 No performance figure, structural basis or decision changes: the VPP already used the 136 mm blade, only the table was stale. Not re-checked in this pass: sail_rescan.py, docnums.py, joint_straight.py.
+
+## 4 Nov 2026 - speed cost of the straight-steel joint in specs/08 pointed to specs/11
+
+Re-ran joint_straight.py: every joint margin matched specs/08 (glue 3.6x, steel 7.1x, 4.2x at the screw hole, carbon 14.7x above the steel's end and 5.9x or more along the bend, woven sleeve 1.3x, arm drag +4.9% at 10 kt). The speed-cost sentence in specs/08 did not: it still had the 29 Oct figures (0.10 kt at 10 and 11 kt of wind, nothing at 12 kt, top reach 22.05 against 22.15 kt). The script now gives 0.10 kt at 10 kt of wind, nothing at 11 kt, 0.2 kt at 12 kt and 0.1 kt on the top reach (21.76 against 21.86 kt), which is what specs/11 already says. Replaced the figures in specs/08 with a pointer to specs/11 so the numbers live in one place. No performance figure changed.
+
+Not fixed, noticed: specs/08 line 60 still says the lead change leaves the all-up CG "then x 491 mm"; the Weight Budget CG is now x 481.8 mm (30 Oct 2026).
