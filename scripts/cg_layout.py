@@ -14,7 +14,7 @@ import math
 G = 9.81
 X_LCB, X_FOIL, Z_FOIL, X_RUD = 443.0, 526.4, -239.4, 20.0   # LCB (Design & Specs section 2); main foil quarter chord (CAD); rudder stock (CAD, Rudder_A)
 TARGET = 2800.0
-DRAG = {6.5: 2.43, 10: 3.86, 12: 4.87, 14.5: 6.32}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4819
+DRAG = {6.5: 2.43, 10: 3.86, 12: 4.87, 14.5: 6.32}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4817
 # and the 156 mm wetted, 34 -> 20 mm rudder blade, 5 Nov 2026; was 2.45/3.90/4.92/6.40 with the 136 mm blade; these are c.drag(V, True), not the r250c.py breakdown totals)
 H_CE, Z_DRAG = 395.0, -200.0                                 # sail centre of effort above the waterline (Design & Specs, an assumption there too); drag centre (A)
 GML = 5.0                                                    # m, longitudinal metacentric height, estimated from the Hull_v2 waterplane (A)
@@ -37,7 +37,7 @@ WB = [
     (32, 'Cant motor drivers x2', 6.0, 470.0, 20.0, 'fixed'),
     (33, 'Pivot bulkheads x2', 88.4, 531.3, 23.0, 'fixed'),
     (34, 'Rudder stock, collar and cap', 29.2, 20.0, 26.0, 'fixed'),
-    (35, 'Rudder blade (240 mm, 34->20 mm taper; Hull_v2 version 24)', 18.4, 14.7, -109.4, 'fixed'),
+    (35, 'Rudder blade (240 mm, 34->20 mm taper, solid tip plug below 200 mm; Hull_v2 version 26)', 19.4, 14.8, -121.2, 'fixed'),
     (36, 'Rudder T-foil', 7.2, 16.0, -260.2, 'fixed'),
     (37, 'Rudder rake actuator (AGF A50BHLW, rev B)', 55.9, 69.2, 4.8, 'fixed'),
     (38, 'Rudder steering (Savox SW-0250MG, rev B)', 34.9, 55.5, 10.3, 'fixed'),
@@ -74,7 +74,7 @@ WB = [
     (69, 'Fasteners', 15.0, 480.0, 15.0, 'fixed'),
     (70, 'Lead ballast, two blocks between the pivot bulkheads', None, 531.4, -30.0, 'lead'),
 ]
-SHEET_CG = (481.932, 4.714)   # Weight Budget row 18 on 5 Nov 2026 (240 mm blade; 481.449, 4.610 before it, with the tripod rows of 30 Oct)
+SHEET_CG = (481.749, 4.604)   # Weight Budget row 18 on 5 Nov 2026 (240 mm blade with the solid tip plug; 481.449, 4.610 before the blade, with the tripod rows of 30 Oct)
 
 
 def rig_x(row, x_m):

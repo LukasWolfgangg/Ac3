@@ -4,9 +4,9 @@ the righting moment, the heel cap and the sail's steady side (heeling) force at 
 30 Oct 2026: re-run at the rudder rev B CG (opt.X_CG 0.4818) with the 136 mm wetted rudder blade (r250c.LB): the top reach is now
 21.86 kt at TWA 105 with 13.64 N on the rudder, 41.11 N on the foil and 13.36 Nm of design cant torque; at 22.15 kt the rudder
 load is 14.04 N. The structural basis stays at the 29 Oct 2026 values (22.15 kt, 14.01 N, 41.48 N, 13.48 Nm), which envelope it.
-5 Nov 2026: re-run at the CG of the 240 mm blade (opt.X_CG 0.4819) with the 156 mm wetted, 34 -> 20 mm blade (r250c.LB, r250c.BC): the top
-reach is 21.95 kt at TWA 105 with 13.57 N on the rudder, 41.04 N on the foil and 13.34 Nm of design cant torque; at 22.15 kt the rudder
-load is 13.83 N. Still inside the structural basis."""
+5 Nov 2026: re-run at the CG of the 240 mm blade (opt.X_CG 0.4817) with the 156 mm wetted, 34 -> 20 mm blade (r250c.LB, r250c.BC): the top
+reach is 21.95 kt at TWA 105 with 13.56 N on the rudder, 41.02 N on the foil and 13.33 Nm of design cant torque; at 22.15 kt the rudder
+load is 13.82 N. Still inside the structural basis."""
 import io, contextlib, numpy as np
 with contextlib.redirect_stdout(io.StringIO()):
     import r250c as R

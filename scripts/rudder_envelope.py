@@ -9,7 +9,8 @@ Model (same as rudder_sweep.py): the leeward foil is held at its design depth (D
 rudder relative to the foil by Y_LAT x sin(heel) (364.6 mm), bow-down pitch raises it by X_AFT x sin(pitch) (506 mm); heel to windward
 and bow-up pitch lower it by the same amounts. The air gap under the stern hull (84.2 mm at the design ride) follows the same way.
   1. T-foil depth over the leeward / bow-down corners, and the blade length each corner needs for 90 mm.
-  2. The combined budget (and a soft guard whose only output is a bow-up bias on the pitch setpoint) Y_LAT sin(heel) + X_AFT sin(pitch) that keeps 90 mm, which a flight-controller guard can enforce.
+  2. The combined budget Y_LAT sin(heel) + X_AFT sin(pitch) that keeps 90 mm over the centre, and the soft guard set against the shallow-side tip
+     ((Y_LAT + 60 mm) sin(heel) + X_AFT sin(pitch)), whose only output is a bow-up bias on the pitch setpoint.
   3. Windward heel and bow-up pitch: air gap under the stern, wetted blade, whether the thick root (dry above Z_THIN) stays dry,
      blade drag (the thick-root part with a form-factor estimate (1 + 2 t/c + 60 (t/c)^4), not NeuralFoil) and throw limit.
   4. VPP (r250c.py's chosen case) with that heel-dependent blade drag, for a steady windward heel.
@@ -31,6 +32,7 @@ TIP_HALF = 60.0                            # mm, half the T-foil span: the shall
 MOUNT_PITCH, NEED_6_5, NEED_14_5 = 2.6, 5.0, 0.2   # deg: foil mount pitch (Foilarm_v5 / Weight Budget), E226 incidence needed at 6.5 and 14.5 kt (specs/03, foil.tools AeroBuildup 27 Sep 2026)
 RAKE_POS, RAKE_NEG = 4.92, 4.96            # deg, arm rake range (Hull_v2 Servo_horn joint)
 Y_LAT, X_AFT, AIR0, D_FOIL, ZT = rs.Y_LAT, rs.X_AFT, rs.AIR, rs.D_FOIL, rs.Z_THIN
+GUARD_COEF = Y_LAT + TIP_HALF              # mm: the guard is set against the shallow-side TIP (builder, 5 Nov 2026), so heel counts for 424.6 mm x sin(heel), not 364.6
 sind = lambda a: math.sin(math.radians(a))
 
 # ---- blade with the thick root: chord and t/c by depth below the hull ----
@@ -79,17 +81,18 @@ if __name__ == '__main__':
         b = D_FOIL + (Lb - rs.Z_FOIL_REL) - D_MIN
         print('   with a %d mm blade the budget is %.0f mm (heel %g deg leaves %.1f deg of bow-down)' % (Lb, b, HEEL_MAX, math.degrees(math.asin(max(b - Y_LAT * sind(HEEL_MAX), 0) / X_AFT))))
 
-    print('\n2b. Allowed bow-down pitch for %g mm of water, by leeward heel (%g mm blade):' % (D_MIN, L))
+    print('\n2b. Allowed bow-down pitch for %g mm of water over the shallow-side TIP, by leeward heel (%g mm blade):' % (D_MIN, L))
     for h in (0, 2, 4, 6, 8, HEEL_MAX):
-        sp = ((L - rs.Z_FOIL_REL) * math.cos(math.radians(h)) + D_FOIL - D_MIN - Y_LAT * sind(h)) / X_AFT
+        sp = ((L - rs.Z_FOIL_REL) * math.cos(math.radians(h)) + D_FOIL - D_MIN - GUARD_COEF * sind(h)) / X_AFT
         print('   heel %4.1f deg: %.1f deg of bow-down' % (h, math.degrees(math.asin(max(min(sp, 1.0), -1.0)))))
-    print('\n2c. SOFT GUARD (PROPOSED; its only output is a bow-up bias on the pitch setpoint): use = Y_LAT sin(leeward heel) + X_AFT sin(bow-down pitch);')
+    print('\n2c. SOFT GUARD (PROPOSED; its only output is a bow-up bias on the pitch setpoint): use = (Y_LAT + TIP_HALF) sin(leeward heel) + X_AFT sin(bow-down pitch), i.e. set against the tip;')
     print('   no bias below %g mm, a bias rising linearly to %g deg of bow-up at %g mm, held there (the %g mm budget of section 2 is the full-bias point)' % (GUARD_START, GUARD_BIAS_MAX, GUARD_FULL, GUARD_FULL))
-    print('   %-26s %10s %8s %10s %14s' % ('leeward heel / bow-down', 'use mm', 'bias', 'depth', 'depth with guard'))
+    print('   %-26s %10s %8s %10s %14s' % ('leeward heel / bow-down', 'use mm', 'bias', 'tip depth', 'tip, with guard'))
     for h, p in ((5.7, 2), (8, 3), (HEEL_MAX, 2), (HEEL_MAX, 3), (HEEL_MAX, PITCH_MAX)):
-        use = Y_LAT * sind(h) + X_AFT * sind(p)
+        use = GUARD_COEF * sind(h) + X_AFT * sind(p)
         bias = GUARD_BIAS_MAX * min(max((use - GUARD_START) / (GUARD_FULL - GUARD_START), 0.0), 1.0)
-        print('   %-26s %10.0f %6.1f deg %7.0f mm %11.0f mm' % ('%g deg / %g deg' % (h, p), use, bias, rs.tfoil_depth(L, h, p), rs.tfoil_depth(L, h, p - bias)))
+        print('   %-26s %10.0f %6.1f deg %7.0f mm %11.0f mm' % ('%g deg / %g deg' % (h, p), use, bias,
+              rs.tfoil_depth(L, h, p) - TIP_HALF * sind(h), rs.tfoil_depth(L, h, p - bias) - TIP_HALF * sind(h)))
     print('   bow-up bias lowers the stern, which is harmless on the leeward side (the air gap there is large); it is not modelled for the main foil or the pitch loop')
     print('\n3. WINDWARD heel and bow-UP pitch (foil depth held): air gap under the stern, wetted blade, thick root dry only while the gap > %.1f mm' % ZT)
     print('   %-34s %8s %8s %6s %11s %12s' % ('case', 'gap mm', 'wetted', 'root', 'drag 10 kt', 'limit 22 kt'))
@@ -125,14 +128,14 @@ if __name__ == '__main__':
     print('\n6. SHALLOW-SIDE TIP (the T-foil tip sits %g mm x sin(heel) above the centre; spec 03 states its 3-chord rule at the tip). Depth in mm, 90 mm wanted:' % TIP_HALF)
     print('   %-26s %8s %8s %12s %14s' % ('leeward heel / bow-down', 'centre', 'tip', 'tip, guard', 'L for tip 90'))
     for h, p in ((5.7, 2), (8, 3), (HEEL_MAX, 0), (HEEL_MAX, 2), (HEEL_MAX, 3), (HEEL_MAX, PITCH_MAX)):
-        use = Y_LAT * sind(h) + X_AFT * sind(p)
+        use = GUARD_COEF * sind(h) + X_AFT * sind(p)
         bias = GUARD_BIAS_MAX * min(max((use - GUARD_START) / (GUARD_FULL - GUARD_START), 0.0), 1.0)
         tip = rs.tfoil_depth(L, h, p) - TIP_HALF * sind(h); tipg = rs.tfoil_depth(L, h, p - bias) - TIP_HALF * sind(h)
         Ltip = rs.L_needed(D_MIN - D_FOIL, h, p) + TIP_HALF * sind(h) / math.cos(math.radians(h))
         print('   %-26s %8.0f %8.0f %12.0f %11.0f mm' % ('%g deg / %g deg' % (h, p), rs.tfoil_depth(L, h, p), tip, tipg, Ltip))
     print('   set against the tip the budget is (Y_LAT + %g) x sin(heel) + X_AFT x sin(pitch) <= %.0f mm: 10 deg of heel alone uses %.0f mm, so the %g mm blade' % (
         TIP_HALF, budget, (Y_LAT + TIP_HALF) * sind(HEEL_MAX), L))
-    print('   cannot hold 90 mm at the tip at 10 deg of heel even level; the guard (2 deg cap) would be active at every 10 deg gust. At 7 deg heel the tip rule still leaves %.1f deg of bow-down.' % (
+    print('   cannot hold 90 mm at the tip at 10 deg of heel even level; the tip-based guard (2 deg cap) is therefore at its cap in every 10 deg gust. At 7 deg heel the tip rule still leaves %.1f deg of bow-down.' % (
         math.degrees(math.asin(max(budget - (Y_LAT + TIP_HALF) * sind(7.0), 0) / X_AFT))))
 
     print('\n7. MAIN FOIL under the guard: a bow-up pitch bias adds the same angle of attack to the arm-mounted foil, so the arm rake has to take it out again')
