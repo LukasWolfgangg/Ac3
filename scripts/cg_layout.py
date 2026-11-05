@@ -14,8 +14,8 @@ import math
 G = 9.81
 X_LCB, X_FOIL, Z_FOIL, X_RUD = 443.0, 526.4, -239.4, 20.0   # LCB (Design & Specs section 2); main foil quarter chord (CAD); rudder stock (CAD, Rudder_A)
 TARGET = 2800.0
-DRAG = {6.5: 2.45, 10: 3.90, 12: 4.92, 14.5: 6.40}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4818
-# and the 136 mm wetted rudder blade, 30 Oct 2026; was 2.42/3.81/4.78/6.20 at x 490.7 with a 119 mm blade)
+DRAG = {6.5: 2.43, 10: 3.86, 12: 4.87, 14.5: 6.32}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4819
+# and the 156 mm wetted, 34 -> 20 mm rudder blade, 5 Nov 2026; was 2.45/3.90/4.92/6.40 with the 136 mm blade; these are c.drag(V, True), not the r250c.py breakdown totals)
 H_CE, Z_DRAG = 395.0, -200.0                                 # sail centre of effort above the waterline (Design & Specs, an assumption there too); drag centre (A)
 GML = 5.0                                                    # m, longitudinal metacentric height, estimated from the Hull_v2 waterplane (A)
 DECK_M = 71.0                                                # deck height at the mast (A)
@@ -37,11 +37,11 @@ WB = [
     (32, 'Cant motor drivers x2', 6.0, 470.0, 20.0, 'fixed'),
     (33, 'Pivot bulkheads x2', 88.4, 531.3, 23.0, 'fixed'),
     (34, 'Rudder stock, collar and cap', 29.2, 20.0, 26.0, 'fixed'),
-    (35, 'Rudder blade (220 mm)', 21.0, 14.2, -120.3, 'fixed'),
-    (36, 'Rudder T-foil', 7.2, 16.0, -240.2, 'fixed'),
+    (35, 'Rudder blade (240 mm, 34->20 mm taper; Hull_v2 version 24)', 18.4, 14.7, -109.4, 'fixed'),
+    (36, 'Rudder T-foil', 7.2, 16.0, -260.2, 'fixed'),
     (37, 'Rudder rake actuator (AGF A50BHLW, rev B)', 55.9, 69.2, 4.8, 'fixed'),
     (38, 'Rudder steering (Savox SW-0250MG, rev B)', 34.9, 55.5, 10.3, 'fixed'),
-    (39, 'Rudder structure (well, carrier, cassette, deck cover, tripod)', 18.3, 23.8, 26.6, 'fixed'),
+    (39, 'Rudder structure (well, carrier, cassette, deck cover, tripod)', 20.0, 24.8, 28.6, 'fixed'),
     (40, 'Mast', 153.0, None, 554.0, 'rig'),
     (41, 'Boom', 24.1, None, 131.0, 'rig'),
     (42, 'Mainsail', 27.4, None, 644.0, 'rig'),
@@ -74,7 +74,7 @@ WB = [
     (69, 'Fasteners', 15.0, 480.0, 15.0, 'fixed'),
     (70, 'Lead ballast, two blocks between the pivot bulkheads', None, 531.4, -30.0, 'lead'),
 ]
-SHEET_CG = (481.750, 4.562)   # Weight Budget row 18 on 30 Oct 2026
+SHEET_CG = (481.932, 4.714)   # Weight Budget row 18 on 5 Nov 2026 (240 mm blade; 481.449, 4.610 before it, with the tripod rows of 30 Oct)
 
 
 def rig_x(row, x_m):
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     L0 = items()
     m, x, z = cg(L0)
     lead = [i for i in L0 if i[5] == 'lead'][0][2]
-    print('Weight Budget snapshot (30 Oct 2026): %.1f g, CG x %.2f z %.2f (sheet row 18: x %.2f z %.2f); lead %.1f g (2 x %.1f g)' % (m, x, z, SHEET_CG[0], SHEET_CG[1], lead, lead / 2))
+    print('Weight Budget snapshot (5 Nov 2026): %.1f g, CG x %.2f z %.2f (sheet row 18: x %.2f z %.2f); lead %.1f g (2 x %.1f g)' % (m, x, z, SHEET_CG[0], SHEET_CG[1], lead, lead / 2))
     for kind in ('fixed', 'rig', 'move', 'lead'):
         mk, xk, zk = cg([i for i in L0 if i[5] == kind])
         print('  %-5s %7.1f g at x %6.1f z %6.1f' % (kind, mk, xk, zk))
