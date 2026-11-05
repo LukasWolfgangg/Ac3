@@ -8,8 +8,12 @@ bottom, lower stock bearing there, upper bearing at the top of the stern struts)
 Geometry from Hull_v2 version 19 (measured 29 Oct 2026): rudder stock at x = 20 mm from the transom, hull bottom on the
 centreline z = -20.2 mm, stern deck z = +19.5 mm (hull frame, mm above the design waterline). At the design ride the water
 surface is at z = 30.6 - 270 + 135 = -104.4 mm (cant axis 30.6 mm above the DWL, 270 mm arm drop, 135 mm wetted strut), so the
-stern's hull bottom flies 84.2 mm above the water at level trim. Blade below the hull bottom: 220 mm, which puts the T-foil at
+stern's hull bottom flies 84.2 mm above the water at level trim. Blade below the hull bottom: 220 mm put the T-foil at
 the main foil's depth (136 mm) at the design ride; Design & Specs had guessed 230-260 mm before the hull was measured.
+5 Nov 2026: Lukas chose 240 mm (4 Nov 2026) with the thin section tapering from 34 mm at 69 mm below the hull to 20 mm at the
+T-foil (rudder_sweep.py), drawn in Hull_v2 version 24. L is now 240 mm: T-foil 155.8 mm under water at the design ride, 20 mm
+below the main foil. The blocks that use one chord (c) are now the UNIFORM 34 mm comparison at that depth; the chosen tapered
+blade is the last block, computed with rudder_sweep.Blade (same section() and loads).
 
 Side force: lifting-line slope CL_alpha = 2*pi*AR/(AR+2) on the wetted part, with the free surface either a pressure-release
 plane (AR = wetted span / chord) or a wall (AR doubled); the wall case is the higher force and sets the limit. Free-surface
@@ -37,7 +41,7 @@ def section(c, tc, n, ply=0.2325, n090=1):
 Z_BOTTOM, Z_DECK = -20.2, 19.5
 Z_WATER = 30.6 - 270.0 + 135.0
 AIR = Z_BOTTOM - Z_WATER                     # 84.2 mm of air under the stern at the design ride
-L = 220.0                                    # blade below the hull bottom
+L = 240.0                                    # blade below the hull bottom (DECIDED 4 Nov 2026; was 220)
 LW = L - AIR                                 # wetted length foiling
 Z_UPPER = Z_DECK + 50.0                      # upper bearing at the top of the stern struts, ASSUMED 50 mm above the deck
 SPAN_B = Z_UPPER - Z_BOTTOM                  # bearing spacing
@@ -45,7 +49,8 @@ X_LEVER = (490.9 - 20.0) / 1000.0            # rudder to the all-up CG, m (Weigh
 IZ = 0.12                                    # yaw inertia, kg m^2: 0.038 from the fore-aft spread (Weight Budget) + ~0.08 lateral, both arms down (ESTIMATE)
 M_KG = 2.80
 DMAX_MECH = 25.0                             # mechanical throw, deg (ASSUMED, typical)
-c, tc, n = 34.0, 0.17, 4                     # current blade (PROPOSED in Mechanisms - Rudder)
+c, tc, n = 34.0, 0.17, 4                     # thin section at its start; the blade tapers to C_TIP at the T-foil (last block)
+C_TIP = 20.0
 
 def cla(AR): return 2 * math.pi * AR / (AR + 2)
 def per_deg(V, wet, chord=c):
@@ -55,7 +60,7 @@ def per_deg(V, wet, chord=c):
 I, Z, allow, mpm = section(c, tc, n)
 M4 = allow / 4 * Z / 1000.0                  # Nm the root may carry at the 4x bar (design value, x1.3 already in the load)
 print('geometry: stern hull bottom %.1f mm above the water at the design ride; blade %.0f mm below the hull, %.0f mm wetted foiling; bearings %.0f mm apart' % (AIR, L, LW, SPAN_B))
-print('blade %g mm, %g%%, %d plies: I %.0f mm4 (thin-wall formula 264), Z %.1f mm3, allowable %.0f MPa, root may carry %.2f Nm at 4x; %.1f g for %g mm' % (c, 100 * tc, n, I, Z, allow, M4, mpm * L, L))
+print('uniform blade %g mm, %g%%, %d plies: I %.0f mm4 (thin-wall formula 264), Z %.1f mm3, allowable %.0f MPa, root may carry %.2f Nm at 4x; %.1f g for %g mm' % (c, 100 * tc, n, I, Z, allow, M4, mpm * L, L))
 
 def limit(V, hullborne=False, M_cap=M4, lever_off=0.0):
     wet = L if hullborne else LW
@@ -64,7 +69,7 @@ def limit(V, hullborne=False, M_cap=M4, lever_off=0.0):
     m_w = 1.3 * f_w * lever / 1000.0         # Nm per degree, design
     return M_cap / m_w, f_pr, f_w, lever
 
-print('\nthrow limit (blade root at 4x, wall model), the force per degree in both models:')
+print('\nthrow limit, UNIFORM %g mm blade at %g mm (blade root at 4x, wall model), the force per degree in both models:' % (c, L))
 print('  %-9s %-11s %-10s %-22s %s' % ('speed', 'mode', 'limit', 'side force N/deg', 'limit capped at the %g deg mechanical throw' % DMAX_MECH))
 for V, hb in ((3, True), (5, True), (6.5, True), (6.5, False), (8, False), (10, False), (12, False), (14.5, False), (18, False), (22.15, False), (25, False)):
     d, fpr, fw, lev = limit(V, hb)
@@ -99,7 +104,7 @@ for keep in (15.0,):
     print('  thin %g%% section from %.0f mm below the hull (%g mm above the design waterline): the critical section moves there, lever %.0f mm instead of %.0f;' % (100 * tc, z_thin, keep, lev_t, lev))
     print('  limit %.2f deg at 22 kt (rule %.0f / V^2), hull-bottom moment %.2f Nm, stock %.1f mm 17-4PH; a 40 mm x 25%% root (10 mm thick) houses a 6.5 mm stock' % (d_t, d_t * 22.15 ** 2, M_hull, dmin))
 
-print('\nother blades at the same 220 mm, thin all the way (limit at 22 kt):')
+print('\nother blades at the same %g mm, thin all the way (limit at 22 kt):' % L)
 for cc, tt, nn in ((34, 0.17, 6), (40, 0.17, 4), (40, 0.20, 4), (34, 0.17, 0)):
     I2, Z2, a2, mp2 = section(cc, tt, nn)
     M42 = a2 / 4 * Z2 / 1000.0
@@ -114,3 +119,14 @@ Mr = Dt * L / 1000 + Db * (L - LW / 2) / 1000 + CMt
 Mr5 = Mr + 14.01 * L / 1000 * math.sin(math.radians(5))
 print('\nrake moment about the hull-bottom pivot at 22.15 kt, %g mm blade: %.2f Nm steady (%.2f at 5 deg of rake, the downforce offset), %.2f / %.2f Nm x1.3; at the strut top (%.0f mm up) that is %.0f N x1.3' % (
     L, Mr, Mr5, 1.3 * Mr, 1.3 * Mr5, SPAN_B, 1.3 * Mr5 / (SPAN_B / 1000)))
+
+# ---- chosen blade (4 Nov 2026, DECIDED by Lukas; numbers PROPOSED): 240 mm, thick root, 34 -> 20 mm linear taper, 4 plies ----
+if __name__ == '__main__':
+    from rudder_sweep import Blade, Z_THIN, X_LEVER as XL
+    b = Blade(L, c, C_TIP); lim, zc = b.limit(22.15)
+    Ms, ds = b.stock_mm(); Fl = b.force_per_deg(22.15) * lim
+    print('\nCHOSEN BLADE %g mm, %g -> %g mm, %g%%, %d plies (tapered from %.0f mm below the hull): wetted %.0f mm' % (L, c, C_TIP, 100 * tc, n, Z_THIN, b.LW))
+    print('  limit %.2f deg at 22.15 kt (rule %.0f / V^2), critical station %.0f mm below the hull; side force at the limit %.1f N; thin shell %.1f g' % (lim, lim * 22.15 ** 2, zc, Fl, b.mass()))
+    print('  hull-bottom moment %.2f Nm -> %.1f mm 17-4PH at 3x on yield (6 mm drawn: %.1fx); rake moment x1.3 at 5 deg %.2f Nm' % (Ms, ds, 1000.0 / (32 * Ms * 1000 / (math.pi * 6.0 ** 3)), b.rake_moment()))
+    print('  steering authority at the limit, 22 kt: yaw moment %.1f Nm (wall model, the higher force); a steady 1 g turn needs %.2f deg at 22 kt and %.2f deg at 10 kt' % (Fl * XL, F1g / b.force_per_deg(22.15), F1g / b.force_per_deg(10)))
+    print('  NOT recomputed for the taper: the hull-borne factor (79% of the foiling limit was for the uniform 220 mm blade) and the bearing loads')
