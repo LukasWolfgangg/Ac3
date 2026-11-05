@@ -16,7 +16,7 @@ PIVOT_Y=0.1146 # 28 Oct 2026: arm pivot at 84% of the Hull_v2 half-beam at the p
 # the old performance model.
 RUD_STRUCT = 0.5101   # 29 Oct 2026: STRUCTURAL rudder downforce per unit weight = the pitch-balance load on the top reach of the design
 # window (12 kt of wind, TWA 105 deg, 22.15 kt; top_reach.py): 14.01 N / 27.47 N at 2.80 kg. Replaces the 175/550 rule (0.318, 8.74 N).
-X_CG, X_FOIL, X_RUD, Z_DRAG = 0.4818, 0.5264, 0.020, -0.200   # m from the transom / waterline: all-up CG (Weight Budget row 18,
+X_CG, X_FOIL, X_RUD, Z_DRAG = 0.4819, 0.5264, 0.020, -0.200   # m from the transom / waterline: all-up CG (Weight Budget row 18,
 # 30 Oct 2026, after rudder rev B; mast at 600 mm assumed; was 0.4907 on the 28 Oct layout, cg_layout.py), main foil quarter chord (CAD),
 # rudder stock (CAD, Hull_v2 Rudder_A), drag centre (assumed)
 CM_E226 = {133000: [(-0.090, -0.0127), (0.152, -0.0388), (0.251, -0.0473), (0.323, -0.0503), (0.417, -0.0457), (0.495, -0.0373), (0.580, -0.0297), (0.670, -0.0239)],

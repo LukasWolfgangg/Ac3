@@ -11,10 +11,11 @@ h=hybrid(22,0.18,JOINT,40,0.20,6,W,reach,MAT['17-4PH H1025'])
 class C2(CfgH):
     mult=1.0
     def drag(s,V,foilborne=True): return s.mult*CfgH.drag(s,V,foilborne)
-LB=0.1358 # 30 Oct 2026: rudder blade wetted length at the design ride = 220 mm below the hull - 84.2 mm of air under the stern
+BC=0.0264 # 5 Nov 2026: rudder blade area-mean chord over the wetted part (34 -> 20 mm taper, 156 mm wetted; strip drag in rudder_sweep.py is within 0.03 N)
+LB=0.1558 # 5 Nov 2026: 240 mm blade, 155.8 mm wetted at the design ride (was 0.1358, 220 mm blade). Before: 30 Oct 2026: rudder blade wetted length at the design ride = 220 mm below the hull - 84.2 mm of air under the stern
 # (rudder_limit.py, Hull_v2); was 0.119, inferred from the old 150 mm blade's drag calibration
 def mk3(A=A,W=W,mult=1.0,CEscale=1.0):
-    c=C2('x',Wkg=W,reach=reach,A=A,tc=0.17,ac=0.038,bc=0.034,Lw=Wetted/1000,Lb=LB,rigAR=2.4,CD0s=0.06,es=0.80); c.hyb=h; c.mult=mult
+    c=C2('x',Wkg=W,reach=reach,A=A,tc=0.17,ac=0.038,bc=BC,Lw=Wetted/1000,Lb=LB,rigAR=2.4,CD0s=0.06,es=0.80); c.hyb=h; c.mult=mult
     c.CE*=CEscale; return c   # 28 Oct 2026: the heel cap follows c.CE and the speed-dependent righting moment (opt.Cfg.capv)
 c=mk3()
 print("W %.2f kg  A %.2f  righting moment %.2f Nm  structural design cant torque %.2f Nm  CE %.3f m  heel cap %.1f N (design-margined %.1f N)"%(W,A,c.RM,1.3*(c.W+c.rud_df)*reach,c.CE,c.cap,1.3*c.cap))
@@ -52,9 +53,9 @@ for s in (0.8,1.0,1.2):
 # weight sensitivity at the chosen sail area
 for w in (2.6,2.8,3.0):
     hh=hybrid(22,0.18,JOINT,40,0.20,6,w,reach,MAT['17-4PH H1025'])
-    cc=C2('x',Wkg=w,reach=reach,A=A,tc=0.17,ac=0.038,bc=0.034,Lw=Wetted/1000,Lb=LB,rigAR=2.4,CD0s=0.06,es=0.80); cc.hyb=hh
+    cc=C2('x',Wkg=w,reach=reach,A=A,tc=0.17,ac=0.038,bc=BC,Lw=Wetted/1000,Lb=LB,rigAR=2.4,CD0s=0.06,es=0.80); cc.hyb=hh
     print("W %.1f: ff %.2f  upwind10/11/12 %.2f %.2f %.2f  steel margin %.1f  twist %.2f  Vto %.2f"%(w,cc.foils_from(),cc.best_upwind(10),cc.best_upwind(11),cc.best_upwind(12),hh['marg_s'],hh['tw'],cc.takeoff_V()/kt))
 print("hybrid:",{k:round(float(v),2) for k,v in h.items()})
 # carbon-only baseline at same W/A for comparison (same wetted length)
-c0=C2('x',Wkg=W,reach=reach,A=A,tc=0.17,ac=0.038,bc=0.034,Lw=Wetted/1000,Lb=LB,rigAR=2.4,CD0s=0.06,es=0.80)
+c0=C2('x',Wkg=W,reach=reach,A=A,tc=0.17,ac=0.038,bc=BC,Lw=Wetted/1000,Lb=LB,rigAR=2.4,CD0s=0.06,es=0.80)
 print("carbon-only 38/17 arm: ff %.2f upwind %.2f %.2f %.2f"%(c0.foils_from(),c0.best_upwind(10),c0.best_upwind(11),c0.best_upwind(12)))
