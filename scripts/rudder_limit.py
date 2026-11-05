@@ -129,4 +129,4 @@ if __name__ == '__main__':
     print('  limit %.2f deg at 22.15 kt (rule %.0f / V^2), critical station %.0f mm below the hull; side force at the limit %.1f N; thin shell %.1f g' % (lim, lim * 22.15 ** 2, zc, Fl, b.mass()))
     print('  hull-bottom moment %.2f Nm -> %.1f mm 17-4PH at 3x on yield (6 mm drawn: %.1fx); rake moment x1.3 at 5 deg %.2f Nm' % (Ms, ds, 1000.0 / (32 * Ms * 1000 / (math.pi * 6.0 ** 3)), b.rake_moment()))
     print('  steering authority at the limit, 22 kt: yaw moment %.1f Nm (wall model, the higher force); a steady 1 g turn needs %.2f deg at 22 kt and %.2f deg at 10 kt' % (Fl * XL, F1g / b.force_per_deg(22.15), F1g / b.force_per_deg(10)))
-    print('  NOT recomputed for the taper: the hull-borne factor (79% of the foiling limit was for the uniform 220 mm blade) and the bearing loads')
+    print('  hull-borne factor (95% of the foiling limit at 6.5 kt, was 79% for the uniform 220 mm blade) and bearing loads (69 N upper, 108 N lower): rudder_envelope.py section 8')

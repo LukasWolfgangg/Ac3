@@ -27,6 +27,9 @@ HEEL_MAX, PITCH_MAX = 10.0, 5.0            # deg, builder's estimate
 HEEL_WIND_TYP = 2.0                        # deg windward the sailor trims for (builder, 5 Nov 2026)
 D_MIN = 90.0                               # mm of water over the T-foil centre: 3 T-foil chords, kept by the builder
 GUARD_START, GUARD_FULL, GUARD_BIAS_MAX = 45.0, 66.0, 2.0   # soft guard (PROPOSED): mm of use where the bias starts, where it is full, and its cap in deg of bow-up
+TIP_HALF = 60.0                            # mm, half the T-foil span: the shallow-side tip sits TIP_HALF x sin(heel) above the centre
+MOUNT_PITCH, NEED_6_5, NEED_14_5 = 2.6, 5.0, 0.2   # deg: foil mount pitch (Foilarm_v5 / Weight Budget), E226 incidence needed at 6.5 and 14.5 kt (specs/03, foil.tools AeroBuildup 27 Sep 2026)
+RAKE_POS, RAKE_NEG = 4.92, 4.96            # deg, arm rake range (Hull_v2 Servo_horn joint)
 Y_LAT, X_AFT, AIR0, D_FOIL, ZT = rs.Y_LAT, rs.X_AFT, rs.AIR, rs.D_FOIL, rs.Z_THIN
 sind = lambda a: math.sin(math.radians(a))
 
@@ -118,3 +121,32 @@ if __name__ == '__main__':
 
     print('\n5. Main foil cross-check (spec 03): 120 mm clearance (3 chords of 40 mm) over the foil tip leaves 15 mm of slack, about 5.7 deg of heel or pitch;')
     print('   the envelope above is %g deg heel and %g deg pitch, so the main foil\'s own 3-chord rule is exceeded beyond 5.7 deg, in gust peaks only (builder, 5 Nov 2026; section 3 of the specs).' % (HEEL_MAX, PITCH_MAX))
+
+    print('\n6. SHALLOW-SIDE TIP (the T-foil tip sits %g mm x sin(heel) above the centre; spec 03 states its 3-chord rule at the tip). Depth in mm, 90 mm wanted:' % TIP_HALF)
+    print('   %-26s %8s %8s %12s %14s' % ('leeward heel / bow-down', 'centre', 'tip', 'tip, guard', 'L for tip 90'))
+    for h, p in ((5.7, 2), (8, 3), (HEEL_MAX, 0), (HEEL_MAX, 2), (HEEL_MAX, 3), (HEEL_MAX, PITCH_MAX)):
+        use = Y_LAT * sind(h) + X_AFT * sind(p)
+        bias = GUARD_BIAS_MAX * min(max((use - GUARD_START) / (GUARD_FULL - GUARD_START), 0.0), 1.0)
+        tip = rs.tfoil_depth(L, h, p) - TIP_HALF * sind(h); tipg = rs.tfoil_depth(L, h, p - bias) - TIP_HALF * sind(h)
+        Ltip = rs.L_needed(D_MIN - D_FOIL, h, p) + TIP_HALF * sind(h) / math.cos(math.radians(h))
+        print('   %-26s %8.0f %8.0f %12.0f %11.0f mm' % ('%g deg / %g deg' % (h, p), rs.tfoil_depth(L, h, p), tip, tipg, Ltip))
+    print('   set against the tip the budget is (Y_LAT + %g) x sin(heel) + X_AFT x sin(pitch) <= %.0f mm: 10 deg of heel alone uses %.0f mm, so the %g mm blade' % (
+        TIP_HALF, budget, (Y_LAT + TIP_HALF) * sind(HEEL_MAX), L))
+    print('   cannot hold 90 mm at the tip at 10 deg of heel even level; the guard (2 deg cap) would be active at every 10 deg gust. At 7 deg heel the tip rule still leaves %.1f deg of bow-down.' % (
+        math.degrees(math.asin(max(budget - (Y_LAT + TIP_HALF) * sind(7.0), 0) / X_AFT))))
+
+    print('\n7. MAIN FOIL under the guard: a bow-up pitch bias adds the same angle of attack to the arm-mounted foil, so the arm rake has to take it out again')
+    print('   rake needed = foil incidence needed - mount pitch (%.1f deg): %+.1f deg at 6.5 kt, %+.1f deg at 14.5 kt; available +%.2f / -%.2f deg' % (MOUNT_PITCH, NEED_6_5 - MOUNT_PITCH, NEED_14_5 - MOUNT_PITCH, RAKE_POS, RAKE_NEG))
+    for kt_, need in ((6.5, NEED_6_5), (14.5, NEED_14_5)):
+        r = need - MOUNT_PITCH
+        print('   %4.1f kt: margin %+.2f deg at the nose-down end; after a %g deg bow-up bias the rake needed is %+.2f deg, margin %+.2f deg' % (kt_, RAKE_NEG + r, GUARD_BIAS_MAX, r - GUARD_BIAS_MAX, RAKE_NEG + r - GUARD_BIAS_MAX))
+    print('   so a full 2 deg bias fits up to about 14.5 kt with %.1f deg to spare; above that the foil needs less incidence still (not tabulated here), so cap the bias by the rake margin left' % (RAKE_NEG + (NEED_14_5 - MOUNT_PITCH) - GUARD_BIAS_MAX))
+
+    print('\n8. HULL-BORNE FACTOR and BEARING LOADS for the chosen blade (240 mm, 34 -> 20 mm, thick root)')
+    f_fly, f_hb = throw_limit(AIR0, 6.5), throw_limit(0.0, 6.5)
+    print('   throw limit at 6.5 kt: foiling %.2f deg, hull-borne (whole blade wet) %.2f deg -> hull-borne is %.0f%% of the foiling limit (uniform 220 mm blade: 79%%)' % (f_fly, f_hb, 100 * f_hb / f_fly))
+    b = rs.Blade(L, 34.0, 20.0); lim, zc = b.limit(22.15); Ms, ds = b.stock_mm()
+    span_b = (19.5 + 50.0) + 20.2          # mm, stern deck + 50 mm (upper bearing, ASSUMED) down to the hull bottom
+    Fd = 1.3 * b.force_per_deg(22.15) * lim
+    print('   at the 22.15 kt limit (%.2f deg): hull-bottom moment %.2f Nm, design side force %.1f N, bearings %.1f mm apart: upper %.0f N, lower %.0f N (uniform 220 mm blade: about 70 N and 110 N)' % (
+        lim, Ms, Fd, span_b, Ms / (span_b / 1000.0), Fd + Ms / (span_b / 1000.0)))
