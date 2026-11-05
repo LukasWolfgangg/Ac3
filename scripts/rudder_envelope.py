@@ -9,7 +9,7 @@ Model (same as rudder_sweep.py): the leeward foil is held at its design depth (D
 rudder relative to the foil by Y_LAT x sin(heel) (364.6 mm), bow-down pitch raises it by X_AFT x sin(pitch) (506 mm); heel to windward
 and bow-up pitch lower it by the same amounts. The air gap under the stern hull (84.2 mm at the design ride) follows the same way.
   1. T-foil depth over the leeward / bow-down corners, and the blade length each corner needs for 90 mm.
-  2. The combined budget Y_LAT sin(heel) + X_AFT sin(pitch) that keeps 90 mm, which a flight-controller guard can enforce.
+  2. The combined budget (and a soft guard whose only output is a bow-up bias on the pitch setpoint) Y_LAT sin(heel) + X_AFT sin(pitch) that keeps 90 mm, which a flight-controller guard can enforce.
   3. Windward heel and bow-up pitch: air gap under the stern, wetted blade, whether the thick root (dry above Z_THIN) stays dry,
      blade drag (the thick-root part with a form-factor estimate (1 + 2 t/c + 60 (t/c)^4), not NeuralFoil) and throw limit.
   4. VPP (r250c.py's chosen case) with that heel-dependent blade drag, for a steady windward heel.
@@ -26,6 +26,7 @@ L = 240.0                                  # blade below the hull, mm (DECIDED 4
 HEEL_MAX, PITCH_MAX = 10.0, 5.0            # deg, builder's estimate
 HEEL_WIND_TYP = 2.0                        # deg windward the sailor trims for (builder, 5 Nov 2026)
 D_MIN = 90.0                               # mm of water over the T-foil centre: 3 T-foil chords, kept by the builder
+GUARD_START, GUARD_FULL, GUARD_BIAS_MAX = 45.0, 66.0, 2.0   # soft guard (PROPOSED): mm of use where the bias starts, where it is full, and its cap in deg of bow-up
 Y_LAT, X_AFT, AIR0, D_FOIL, ZT = rs.Y_LAT, rs.X_AFT, rs.AIR, rs.D_FOIL, rs.Z_THIN
 sind = lambda a: math.sin(math.radians(a))
 
@@ -75,6 +76,18 @@ if __name__ == '__main__':
         b = D_FOIL + (Lb - rs.Z_FOIL_REL) - D_MIN
         print('   with a %d mm blade the budget is %.0f mm (heel %g deg leaves %.1f deg of bow-down)' % (Lb, b, HEEL_MAX, math.degrees(math.asin(max(b - Y_LAT * sind(HEEL_MAX), 0) / X_AFT))))
 
+    print('\n2b. Allowed bow-down pitch for %g mm of water, by leeward heel (%g mm blade):' % (D_MIN, L))
+    for h in (0, 2, 4, 6, 8, HEEL_MAX):
+        sp = ((L - rs.Z_FOIL_REL) * math.cos(math.radians(h)) + D_FOIL - D_MIN - Y_LAT * sind(h)) / X_AFT
+        print('   heel %4.1f deg: %.1f deg of bow-down' % (h, math.degrees(math.asin(max(min(sp, 1.0), -1.0)))))
+    print('\n2c. SOFT GUARD (PROPOSED; its only output is a bow-up bias on the pitch setpoint): use = Y_LAT sin(leeward heel) + X_AFT sin(bow-down pitch);')
+    print('   no bias below %g mm, a bias rising linearly to %g deg of bow-up at %g mm, held there (the %g mm budget of section 2 is the full-bias point)' % (GUARD_START, GUARD_BIAS_MAX, GUARD_FULL, GUARD_FULL))
+    print('   %-26s %10s %8s %10s %14s' % ('leeward heel / bow-down', 'use mm', 'bias', 'depth', 'depth with guard'))
+    for h, p in ((5.7, 2), (8, 3), (HEEL_MAX, 2), (HEEL_MAX, 3), (HEEL_MAX, PITCH_MAX)):
+        use = Y_LAT * sind(h) + X_AFT * sind(p)
+        bias = GUARD_BIAS_MAX * min(max((use - GUARD_START) / (GUARD_FULL - GUARD_START), 0.0), 1.0)
+        print('   %-26s %10.0f %6.1f deg %7.0f mm %11.0f mm' % ('%g deg / %g deg' % (h, p), use, bias, rs.tfoil_depth(L, h, p), rs.tfoil_depth(L, h, p - bias)))
+    print('   bow-up bias lowers the stern, which is harmless on the leeward side (the air gap there is large); it is not modelled for the main foil or the pitch loop')
     print('\n3. WINDWARD heel and bow-UP pitch (foil depth held): air gap under the stern, wetted blade, thick root dry only while the gap > %.1f mm' % ZT)
     print('   %-34s %8s %8s %6s %11s %12s' % ('case', 'gap mm', 'wetted', 'root', 'drag 10 kt', 'limit 22 kt'))
     for name, hw, pu in (('level', 0, 0), ('%g deg windward (the sailing target)' % HEEL_WIND_TYP, HEEL_WIND_TYP, 0), ('%g deg windward + 1 deg bow-up' % HEEL_WIND_TYP, HEEL_WIND_TYP, 1),
