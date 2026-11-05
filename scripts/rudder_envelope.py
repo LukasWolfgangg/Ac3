@@ -1,6 +1,6 @@
 """Rudder blade against the heel / pitch envelope (5 Nov 2026; envelope = the builder's estimate, ASSUMPTION; numbers PROPOSED).
 
-Envelope (builder, 5 Nov 2026): heel +-10 deg and pitch +-5 deg, independent of each other, symmetric because the boat tacks (the
+Envelope (builder, 5 Nov 2026): heel +-10 deg and pitch +-5 deg as gust peaks, independent of each other, symmetric because the boat tacks (the
 leeward foil is the one that carries it); the sailor trims for 0-2 deg of WINDWARD heel; the flight controller holds the foil depth
 but does not compensate for heel. The T-foil keeps at least 3 T-foil chords (90 mm) of water over its centre (the spec 03 rule applied to
 the T-foil, kept by the builder).
@@ -104,4 +104,4 @@ if __name__ == '__main__':
     print('   (one VPP step is about 0.1 kt)')
 
     print('\n5. Main foil cross-check (spec 03): 120 mm clearance (3 chords of 40 mm) over the foil tip leaves 15 mm of slack, about 5.7 deg of heel or pitch;')
-    print('   the envelope above is %g deg heel and %g deg pitch, so the main foil\'s own 3-chord rule is broken beyond 5.7 deg (OPEN, section 3 of the specs).' % (HEEL_MAX, PITCH_MAX))
+    print('   the envelope above is %g deg heel and %g deg pitch, so the main foil\'s own 3-chord rule is exceeded beyond 5.7 deg, in gust peaks only (builder, 5 Nov 2026; section 3 of the specs).' % (HEEL_MAX, PITCH_MAX))
