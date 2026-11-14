@@ -112,5 +112,14 @@ Lukas (14 Nov 2026): rebase the VPP.
 - foil3d.py 3D-corrected upwind 15.25 / 16.32 / 17.38 kt (15.15 / 16.32 / 17.29); joint_straight.py 11 kt cell 16.32 (16.22); breakeven.py cells move by 0.1 kt.
 - sail_rescan.py: 2.8 kg / 0.44 m2 unchanged (6.25 kt, 15.25 / 16.32 / 17.29, cap 31.1 N); 0.48 m2 now level at 11 kt of wind (16.32) and 0.1 kt down at 12; 2.4 kg / 0.44 m2 now foils from 5.75 kt of wind (5.5), takeoff 5.25 kt; 3.0 kg takeoff 5.86 kt.
 - Specs 03, 04-05, 08, 09-10, 11, the README and the script headers take these numbers.
-- Not in this commit: Hull_v2 has an unsaved change that recesses the sensor into the hull (no pod, raised 18 mm, two flared windows); specs/03 still describes the saved version 28 pod until it is saved.
+- Hull_v2 had an unsaved change at this point that recesses the sensor into the hull; saved as version 29, see the next entry.
+
+## 14 Nov 2026 - height sensor recessed into the hull (Hull_v2 version 29)
+
+Lukas (14 Nov 2026): the sensor sticks out quite a bit from the hull, hide it more; save it.
+- Version 28's flat-bottomed pod stood up to 16 mm proud of the V at its outer edges (hull section at x 800: z -36.4 at the keel, -29.4 at y 9, -20.8 at y 18; deck at z 71.6). Deleted: the pod body and the features Tool_height_sensor_pod_opening_x800 / Cut_height_sensor_pod_opening_x800.
+- The sensor bodies (housing, two transducers) are raised 18 mm in their base feature: housing z -15 to -2.5 (cable to 20.1), transducer faces at z -19. New root features Tool_height_sensor_recess_x800 / Cut_height_sensor_recess_x800 cut a housing pocket (x 756-844, y +-15.3, z -16.5 to 0.5) and two windows on the transducer axes (x 783.0 and 817.0) flaring at 15 deg from r 9.5 to 16.7 mm at z -45 (about d30 at the keel line, 3 mm of hull between them); hull volume -60607 mm3 against the uncut hull.
+- A first try with the sensor raised 15 mm and a y +-16 pocket broke through the skin at the forward outer corners (x > 838, y > 15); raised 3 mm more and narrowed. Rays from below now see only the two transducer faces; thinnest skin 2.5 mm at x 843.5, y 15.2.
+- Range at the design ride 67 -> about 85 mm; about 62 mm at 5 deg bow down (blind zone 30 mm). Weight Budget row 59 unchanged: the 10 g pod estimate now stands for an internal bracket (not drawn) and its z -29 is about 15 mm low against the new housing; the CG effect is under 0.01 mm, so not re-trimmed.
+- specs/03 sensor note updated (still PROPOSED). Bench tests: echoes from the window walls (inside the 60 deg beam, expected inside the blind zone) and water held in a window after takeoff.
 
