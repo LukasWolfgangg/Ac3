@@ -3,6 +3,7 @@
 # 30 Oct 2026: re-run with the all-up CG at 481.8 mm (opt.X_CG, rudder rev B) and the 136 mm wetted rudder blade (r250c.LB).
 # 5 Nov 2026: re-run with the CG at 481.7 mm (opt.X_CG 0.4817) and the 156 mm wetted, 34 -> 20 mm blade (r250c.LB, r250c.BC). On Windows the process pool
 # crashes (spawn needs a main guard); run it with concurrent.futures.ProcessPoolExecutor replaced by ThreadPoolExecutor.
+# 14 Nov 2026: re-run with the CG at 484.6 mm (opt.X_CG 0.4846, height sensor under the bow); same Windows workaround.
 # 28 Sep 2026: re-run for the 135 mm joint. Every weight now uses the chosen arm (22 mm x 18% steel to the 135 mm joint, 40 mm x 20% carbon above):
 # with the joint on the vertical run the wet steel section no longer depends on weight, and the carbon upper arm is dry, so re-sizing it for weight
 # changes its mass, not the drag. (Was: arm re-sized per weight with r250.best_hyb at the 280 mm joint.)

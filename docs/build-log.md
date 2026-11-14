@@ -103,3 +103,14 @@ Lukas (14 Nov 2026): put the DFRobot A02YYUW in the model, as far forward as pos
 - Not rebased: opt.X_CG stays 0.4817 and specs/11 (and the 5 Nov VPP figures quoted in specs/03 and specs/08) still use the CG at 481.7 mm. A 2.9 mm forward move is small against the earlier re-runs, but the VPP chain should be re-run before the next decision that leans on speed or rudder load.
 - Open: the pod is a concept (shelling, fairing, bonding flange); the 300 mm cable route up through the hull; the jib sheet servo at x 800, z -10 (row 55, not in CAD) may clash with the sensor cable.
 
+## 14 Nov 2026 - VPP chain rebased to the 484.6 mm CG (height sensor under the bow)
+
+Lukas (14 Nov 2026): rebase the VPP.
+- opt.X_CG 0.4817 -> 0.4846 (Weight Budget row 18 after the sensor move). Re-run against a copy at 0.4817: r250c.py, top_reach.py, breakeven.py, joint_straight.py, foil3d.py, cg_layout.py, sail_rescan.py (the last with the ThreadPoolExecutor workaround, noted in its header).
+- r250c.py: downforce 0.84 / 1.57 / 2.69 / 3.95 / 5.77 N at 6.5 / 8 / 10 / 12 / 14.5 kt (0.67 / 1.40 / 2.53 / 3.79 / 5.61 before), foil load 28.30-33.24 N, righting moment 10.32-12.12 Nm, heel cap 26.1-30.7 N, drag-table total at 10 kt 4.00 N (3.99), takeoff 5.66 kt (5.65); passes 8.74 N at 17.70 kt (17.85). Upwind 15.25 / 16.32 / 17.29 kt unchanged; sensitivity cells move by 0.1 kt (drag x0.7 19.62 at 12 kt, drag x1.3 13.59 / 14.76, CE x0.8 18.55, CE x1.2 14.57). cg_layout.py DRAG table 2.44 / 3.87 / 4.87 / 6.32 N.
+- top_reach.py: 21.95 kt at TWA 105 with 13.72 N, 41.18 N, 13.38 Nm (13.56, 41.02, 13.33); at 22.15 kt 13.98 N (13.82) against the 14.01 N structural basis. The basis still envelopes it, by 0.03 N: any further forward CG move (for example the mast step at 700 mm, or the battery forward) needs top_reach.py re-run and probably the basis raised. Drag x1.3 top reach 19.91 kt with 42.35 N on the foil (42.19).
+- foil3d.py 3D-corrected upwind 15.25 / 16.32 / 17.38 kt (15.15 / 16.32 / 17.29); joint_straight.py 11 kt cell 16.32 (16.22); breakeven.py cells move by 0.1 kt.
+- sail_rescan.py: 2.8 kg / 0.44 m2 unchanged (6.25 kt, 15.25 / 16.32 / 17.29, cap 31.1 N); 0.48 m2 now level at 11 kt of wind (16.32) and 0.1 kt down at 12; 2.4 kg / 0.44 m2 now foils from 5.75 kt of wind (5.5), takeoff 5.25 kt; 3.0 kg takeoff 5.86 kt.
+- Specs 03, 04-05, 08, 09-10, 11, the README and the script headers take these numbers.
+- Not in this commit: Hull_v2 has an unsaved change that recesses the sensor into the hull (no pod, raised 18 mm, two flared windows); specs/03 still describes the saved version 28 pod until it is saved.
+

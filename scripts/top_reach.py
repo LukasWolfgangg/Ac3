@@ -6,7 +6,10 @@ the righting moment, the heel cap and the sail's steady side (heeling) force at 
 load is 14.04 N. The structural basis stays at the 29 Oct 2026 values (22.15 kt, 14.01 N, 41.48 N, 13.48 Nm), which envelope it.
 5 Nov 2026: re-run at the CG of the 240 mm blade (opt.X_CG 0.4817) with the 156 mm wetted, 34 -> 20 mm blade (r250c.LB, r250c.BC): the top
 reach is 21.95 kt at TWA 105 with 13.56 N on the rudder, 41.02 N on the foil and 13.33 Nm of design cant torque; at 22.15 kt the rudder
-load is 13.82 N. Still inside the structural basis."""
+load is 13.82 N. Still inside the structural basis.
+14 Nov 2026: re-run at the CG with the height sensor under the bow (opt.X_CG 0.4846): the top reach is 21.95 kt at TWA 105 with
+13.72 N on the rudder, 41.18 N on the foil and 13.38 Nm of design cant torque; at 22.15 kt the rudder load is 13.98 N, 0.03 N under
+the 14.01 N basis."""
 import io, contextlib, numpy as np
 with contextlib.redirect_stdout(io.StringIO()):
     import r250c as R
