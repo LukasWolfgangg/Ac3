@@ -61,7 +61,7 @@ WB = [
     (56, 'Rig fittings', 12.0, None, 300.0, 'rig'),
     (57, 'Microcontroller', 7.0, 500.0, -5.0, 'move'),
     (58, 'IMU', 3.0, 500.0, -5.0, 'move'),
-    (59, 'Height sensor (under the hull at the pivot station)', 20.0, 531.4, -40.0, 'fixed'),
+    (59, 'Height sensor in its pod under the bow (Hull_v2 version 28)', 30.0, 800.0, -29.0, 'fixed'),
     (60, 'Flight-control battery/BEC', 35.0, 500.0, -5.0, 'move'),
     (61, 'Flight-control wiring and enclosure', 30.0, 500.0, -5.0, 'move'),
     (62, 'Flight-control mounting and potting', 15.0, 500.0, -5.0, 'move'),
@@ -74,7 +74,7 @@ WB = [
     (69, 'Fasteners', 15.0, 480.0, 15.0, 'fixed'),
     (70, 'Lead ballast, two blocks between the pivot bulkheads', None, 531.4, -30.0, 'lead'),
 ]
-SHEET_CG = (481.749, 4.604)   # Weight Budget row 18 on 5 Nov 2026 (240 mm blade with the solid tip plug; 481.449, 4.610 before the blade, with the tripod rows of 30 Oct)
+SHEET_CG = (484.626, 4.686)   # Weight Budget row 18 on 14 Nov 2026 (height sensor and pod at x 800; 481.749, 4.604 on 5 Nov with the sensor at the pivot station)
 
 
 def rig_x(row, x_m):
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     L0 = items()
     m, x, z = cg(L0)
     lead = [i for i in L0 if i[5] == 'lead'][0][2]
-    print('Weight Budget snapshot (5 Nov 2026): %.1f g, CG x %.2f z %.2f (sheet row 18: x %.2f z %.2f); lead %.1f g (2 x %.1f g)' % (m, x, z, SHEET_CG[0], SHEET_CG[1], lead, lead / 2))
+    print('Weight Budget snapshot (14 Nov 2026): %.1f g, CG x %.2f z %.2f (sheet row 18: x %.2f z %.2f); lead %.1f g (2 x %.1f g)' % (m, x, z, SHEET_CG[0], SHEET_CG[1], lead, lead / 2))
     for kind in ('fixed', 'rig', 'move', 'lead'):
         mk, xk, zk = cg([i for i in L0 if i[5] == kind])
         print('  %-5s %7.1f g at x %6.1f z %6.1f' % (kind, mk, xk, zk))
@@ -191,7 +191,7 @@ if __name__ == '__main__':
         return xx
     show('as is (Weight Budget)', L0)
     show('2S battery to the radio bay (x 650)', items(moves={66: 650.0}))
-    show('flight-control bay forward to x 560 (sonar stays at the pivot)', items(moves={57: 560.0, 58: 560.0, 60: 560.0, 61: 560.0, 62: 560.0}))
+    show('flight-control bay forward to x 560 (sonar stays in its bow pod)', items(moves={57: 560.0, 58: 560.0, 60: 560.0, 61: 560.0, 62: 560.0}))
     show('battery to x 650 and the flight-control bay to x 560', items(moves={66: 650.0, 57: 560.0, 58: 560.0, 60: 560.0, 61: 560.0, 62: 560.0}))
     for lx in (600.0, 650.0):
         show('lead forward to x %.0f' % lx, items(lead_x=lx))
