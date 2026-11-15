@@ -224,3 +224,9 @@ Lukas (15 Nov 2026): yes, update the sheet.
 - cg_layout.py rows 27, 28, 31 and SHEET_CG 483.578 / 4.037 reproduce it; static margin 11.8% unchanged; the lead now moves the CG 0.9 mm per 100 mm and would have to sit at x 1332 to reach 490.7 mm. opt.X_CG stays 0.4836.
 - Specs 00, 01-02, 03, 08, 09-10 and the README take the new lead and CG.
 
+## 15 Nov 2026 - rudder steering and rake decoupled in CAD (servo horns locked)
+
+Lukas (15 Nov 2026): moving the steering horn rakes the rudder and vice versa; they should be independent; save it.
+- Cause: in Hull_v2 neither rudder servo-horn joint was locked, so the solver swung the undriven chain: steering horn +30 deg drove the rake horn to its 18.7 deg limit and raked the rudder 5.48 deg; rake horn +15 deg dragged the steering horn to -2.4 deg (steer -1.2 deg). On the boat each servo holds its horn.
+- Fix: Rudder_rake_servo_horn and Rudder_steer_servo_horn are locked (unlock the one to drive). Tested with the other horn held: steering horn +-30 deg gives +-13.5 deg of steer and exactly 0 rake; rake horn +18.7 / -19 deg gives +-5.49 deg of rake and -0.12 deg of steer, the designed geometric coupling of the athwartships steering rod (section 4). Saved in Hull_v2 (the version number had not updated yet when read back).
+
