@@ -123,3 +123,13 @@ Lukas (14 Nov 2026): the sensor sticks out quite a bit from the hull, hide it mo
 - Range at the design ride 67 -> about 85 mm; about 62 mm at 5 deg bow down (blind zone 30 mm). Weight Budget row 59 unchanged: the 10 g pod estimate now stands for an internal bracket (not drawn) and its z -29 is now about 19 mm low (sensor centre about z -10); x is unchanged, and the all-up CG z would rise about 0.2 mm, so the sheet is left as it is until the bracket is drawn.
 - specs/03 sensor note updated (still PROPOSED). Bench tests: echoes from the window walls (inside the 60 deg beam, expected inside the blind zone) and water held in a window after takeoff.
 
+## 15 Nov 2026 - removable main-foil wing, layout B (Hull_v2 version 30)
+
+Lukas (15 Nov 2026): make things modular so a broken or wrongly scaled part is easy to replace, foil horizontals first; chose layout B (foot and M2 screws) over A (collar, constant-profile strut); save it.
+- Measured on Steel_unit_v5: the strut is 3.5-4.0 mm thick only from 4 to 10 mm behind its leading edge (0.8 mm at 0.2 mm, 1.3 mm at 18 mm), the wing 4.08 mm at the root, so no thread fits either; hence a fuselage.
+- foil_joint.py (new) priced both layouts: A collar 14.3 g Ti per side, +0.056 N at 10 kt, upwind -0.2 / -0.1 / -0.1 kt; B foot 13.8 g, +0.039 N, -0.1 / 0 / 0 kt; both clear their strength bars by 4x or more.
+- Hull_v2 version 30 (Steel_unit_v5): Base_split_wing_strut_modular_B splits the one-piece unit (removed through history, Remove_one_piece_steel_unit) into Wing_E226_40x300_17-4PH_removable (surface under the strut rebuilt from a clean section, 247.8 g) and Strut_22x18pc_17-4PH_foot_B; Foot_B_block_z0_6 and Foot_B_taper_z6_12 (sketches Foot_B_profile_*) add the 8 mm foot (+3.0 g, strut 60.5 g), seated on the wing (Foot_B_seat_on_wing); Fuselage_B_revolve makes the d10 x 64 mm Ti-6Al-4V fuselage (11.5 g) with Fuselage_B_tunnel_and_foot_socket; Screw_M2_csk_Ti_y6 and _y16 with their holes in the fuselage, wing (d2.2) and foot (M2). +14.9 g per side.
+- Clearance swept at cant -5 / 0 / 30 / 45 / 60 / 67 deg with the rake servo horn at -25.5 / 0 / +25.5 deg: fuselage 327.2 mm or more from the hull, wing 253.9 mm; joints returned to 0.
+- Specs 00 (new PROPOSED row) and 03 (new bullet) take it. Not changed: the one-piece steel unit and the constant-profile strut stay DECIDED until Lukas confirms; the Weight Budget (about +30 g for the pair, lead 120 -> about 90 g) waits for his OK; opt.py and section 11 do not carry the fuselage drag yet.
+- Seen in passing: the height-sensor bodies in Hull_v2 have the material Steel, so Fusion reports them at 211 g; the Weight Budget's 30 g is right.
+
