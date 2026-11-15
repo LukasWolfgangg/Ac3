@@ -25,7 +25,7 @@ DECK_M = 71.0                                                # deck height at th
 WB = [
     (21, 'Hull shell, bottom, lower topsides and transom', 122.3, 454.3, -9.5, 'fixed'),
     (22, 'Deck and upper topsides', 131.0, 449.8, 49.6, 'fixed'),
-    (23, 'Internal structure, rest (mast step, rudder mount, ballast mounts, hatch frames)', 77.0, 430.0, 10.0, 'fixed'),
+    (23, 'Internal structure, rest (mast step and track, rudder mount, lead rail, hatch frames)', 86.5, 448.8, 7.7, 'fixed'),
     (24, 'Hatches: flight-control + radio bay, plus four gimbal service hatches', 69.2, 557.2, 64.9, 'move'),
     (25, 'Foil arm, upper (carbon) x2', 93.2, 531.8, -40.5, 'fixed'),
     (26, 'Underwater unit x2, layout B (removable wing, Ti fuselage, strut foot)', 640.2, 520.7, -227.0, 'fixed'),
@@ -61,9 +61,9 @@ WB = [
     (56, 'Rig fittings', 12.0, None, 300.0, 'rig'),
     (57, 'Microcontroller', 7.0, 500.0, -5.0, 'move'),
     (58, 'IMU', 3.0, 500.0, -5.0, 'move'),
-    (59, 'Height sensor in its pod under the bow (Hull_v2 version 28)', 30.0, 800.0, -29.0, 'fixed'),
+    (59, 'Height sensor recessed in the bow on a screwed bracket (Hull_v2 version 29)', 22.0, 800.0, -10.0, 'fixed'),
     (60, 'Flight-control battery/BEC', 35.0, 500.0, -5.0, 'move'),
-    (61, 'Flight-control wiring and enclosure', 30.0, 500.0, -5.0, 'move'),
+    (61, 'Flight-control wiring, enclosure, removable tray and connector block', 39.0, 500.0, -5.0, 'move'),
     (62, 'Flight-control mounting and potting', 15.0, 500.0, -5.0, 'move'),
     (63, 'Receiver', 14.0, 650.0, 10.0, 'move'),
     (64, 'Power switch and charge lead', 6.0, 650.0, 10.0, 'move'),
@@ -74,7 +74,7 @@ WB = [
     (69, 'Fasteners', 15.0, 480.0, 15.0, 'fixed'),
     (70, 'Lead ballast, two blocks between the pivot bulkheads', None, 531.4, -30.0, 'lead'),
 ]
-SHEET_CG = (484.213, 3.527)   # Weight Budget row 18 on 15 Nov 2026 (removable wing, arm root, rudder blade, gimbal service hatches; 484.355, 2.874 before the hatches; 484.501, 2.875 before the blade; 484.495, 2.565 with the wing only; 484.626, 4.686 on 14 Nov with the sensor at x 800; 481.749, 4.604 on 5 Nov)
+SHEET_CG = (483.581, 3.818)   # Weight Budget row 18 on 15 Nov 2026 (modularity: wing, arm root, rudder blade, gimbal service hatches, small items; 484.213, 3.527 before the small items; 484.355, 2.874 before the hatches; 484.501, 2.875 before the blade; 484.495, 2.565 with the wing only; 484.626, 4.686 on 14 Nov with the sensor at x 800; 481.749, 4.604 on 5 Nov)
 
 
 def rig_x(row, x_m):

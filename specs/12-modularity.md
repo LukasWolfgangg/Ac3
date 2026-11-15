@@ -32,6 +32,8 @@ One spare of each, in order of likely need: wing with fuselage (both sides use t
 - **Mast step:** a track or a row of step positions instead of one fixed step, so the mast can move fore and aft; the mast step is the strongest CG lever left (section 8). Range and pitch to be set when the rig is drawn.
 - **Height sensor:** a screwed bracket using the A02YYUW's own ears, so the sensor and its 300 mm cable can be replaced from inside.
 
+Booked in the Weight Budget on 15 Nov 2026 as estimates (not drawn): tray about 6 g and connector block about 3 g (row 61), lead rail about 3.5 g and mast step track about 6 g (row 23), sensor bracket about 2 g (row 59, replacing the 10 g pod estimate).
+
 ## 12.4 Open
 
 - Spur pinion under the cant motor plate and the encoder board under the deck edge (section 3).

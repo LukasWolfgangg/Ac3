@@ -187,3 +187,10 @@ Lukas (15 Nov 2026): small items.
 - CLAUDE.md's specs list now names section 12.
 - Nothing drawn and nothing in the Weight Budget yet: the tray, connector block, lead rail, mast track and sensor bracket are estimated at about 20 g together, to be booked when Lukas agrees or when they are drawn.
 
+## 15 Nov 2026 - small modularity items booked in the Weight Budget
+
+Lukas (15 Nov 2026): yes, book them.
+- Weight Budget (no formulas touched, no rows inserted): row 23 internal structure 77 -> 86.5 g (low 57, high 193) at x 448.8, z 7.7 for a mast step track (about 6 g, assumed at x 625, z 0; rig not drawn) and a ply lead rail with M3 inserts and screws (about 3.5 g at x 560, z -30); row 59 height sensor 30 -> 22 g (low 18, high 35) at x 800, z -10, now the recessed sensor on a screwed bracket (about 2 g), replacing the 14 Nov pod estimate (10 g) that the recess of Hull_v2 version 29 had made stale, and its z -29; row 61 flight-control wiring 30 -> 39 g (low 27, high 56) for a removable tray (about 6 g) and a connector block (about 3 g); lead 2 x 25.0 -> 2 x 19.75 g (39.5 g, -10.5 g net); A2 and A18 notes. Read back: total 2800.0 g, hull and deck 497.4 g, flight-control electronics 121.0 g, CG x 483.58, z 3.82.
+- cg_layout.py rows 23, 59, 61 and SHEET_CG 483.581 / 3.818 reproduce it. The CG is 0.6 mm further aft (the sensor lost 8 g at the bow); opt.X_CG (0.4846) is now 1.0 mm forward of the sheet, worth about 0.05 N less rudder load at 10 kt; the VPP chain was not re-run (inside its 0.1 kt resolution, and the change lowers the structural rudder load).
+- Specs 00, 01-02, 08, 09-10, 12 and the README take it.
+
