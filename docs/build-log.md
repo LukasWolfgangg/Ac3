@@ -194,3 +194,12 @@ Lukas (15 Nov 2026): yes, book them.
 - cg_layout.py rows 23, 59, 61 and SHEET_CG 483.581 / 3.818 reproduce it. The CG is 0.6 mm further aft (the sensor lost 8 g at the bow); opt.X_CG (0.4846) is now 1.0 mm forward of the sheet, worth about 0.05 N less rudder load at 10 kt; the VPP chain was not re-run (inside its 0.1 kt resolution, and the change lowers the structural rudder load).
 - Specs 00, 01-02, 08, 09-10, 12 and the README take it.
 
+## 15 Nov 2026 - VPP chain rebased to 483.6 mm; Hull_v2 version 31 confirmed
+
+Lukas (15 Nov 2026): re-run the VPP; Fusion is up.
+- opt.X_CG 0.4846 -> 0.4836 (Weight Budget row 18 after the modularity changes). Re-run against a copy at 0.4846: r250c.py downforce 0.78 / 1.51 / 2.64 / 3.89 / 5.72 N at 6.5 / 8 / 10 / 12 / 14.5 kt (0.84 / 1.57 / 2.69 / 3.95 / 5.77), foil 28.25-33.18 N, righting moment 10.30-12.10 Nm, heel cap 26.1-30.6 N, 8.74 N reached at 17.75 kt (17.70); upwind 15.25 / 16.32 / 17.29 kt unchanged; drag x1.3 13.59 / 14.66 / 15.64; W 2.6 upwind 14.95 at 10 kt. top_reach.py 21.95 kt with 13.66 N, 41.13 N, 13.37 Nm (13.72, 41.18, 13.38); 13.92 N at 22.15 kt (13.98), now 0.09 N under the 14.01 N basis; drag x1.3 reach 19.91 kt, 42.30 N. foil3d.py 3D-corrected upwind 15.15 / 16.32 / 17.29 (15.25 / 16.32 / 17.38). breakeven.py drag x1.6 at 12 kt 14.27. sail_rescan.py: 0.1 kt cells and heel caps -0.1 N; the chosen case unchanged. cg_layout.py DRAG 2.43 / 3.87 / 4.87 / 6.32. joint_straight.py unchanged.
+- The fuselage drag of the removable wing (foil_joint.py) is still outside opt.py.
+- Specs 00, 03, 04-05, 08, 09-10, 11, the README and the script headers take the new figures.
+- Fusion back online: Hull_v2 reads version 31 in the cloud (latest), unmodified. The offline saves went up as one version, so version 31 holds everything after the removable wing (version 30): the arm-root socket (fork rev F), the removable rudder blade, the local hull shell at the gimbal, the gimbal service hatches, the worm-housing cap and the removable rake pin. Entries above that say the version was unconfirmed refer to version 31.
+- Lukas (15 Nov 2026): make the hull less transparent to see its edge - hull body opacity 0.35 -> 0.75 in Hull_v2 (display only, not yet saved).
+

@@ -14,7 +14,7 @@ import math
 G = 9.81
 X_LCB, X_FOIL, Z_FOIL, X_RUD = 443.0, 526.4, -239.4, 20.0   # LCB (Design & Specs section 2); main foil quarter chord (CAD); rudder stock (CAD, Rudder_A)
 TARGET = 2800.0
-DRAG = {6.5: 2.44, 10: 3.87, 12: 4.87, 14.5: 6.32}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4846
+DRAG = {6.5: 2.43, 10: 3.87, 12: 4.87, 14.5: 6.32}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4836, 15 Nov 2026; 2.44 at 6.5 kt with 0.4846
 # and the 156 mm wetted, 34 -> 20 mm rudder blade, 14 Nov 2026; 2.43/3.86/4.87/6.32 at 0.4817 on 5 Nov; was 2.45/3.90/4.92/6.40 with the 136 mm blade; these are c.drag(V, True), not the r250c.py breakdown totals)
 H_CE, Z_DRAG = 395.0, -200.0                                 # sail centre of effort above the waterline (Design & Specs, an assumption there too); drag centre (A)
 GML = 5.0                                                    # m, longitudinal metacentric height, estimated from the Hull_v2 waterplane (A)

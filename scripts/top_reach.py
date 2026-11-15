@@ -9,7 +9,9 @@ reach is 21.95 kt at TWA 105 with 13.56 N on the rudder, 41.02 N on the foil and
 load is 13.82 N. Still inside the structural basis.
 14 Nov 2026: re-run at the CG with the height sensor under the bow (opt.X_CG 0.4846): the top reach is 21.95 kt at TWA 105 with
 13.72 N on the rudder, 41.18 N on the foil and 13.38 Nm of design cant torque; at 22.15 kt the rudder load is 13.98 N, 0.03 N under
-the 14.01 N basis."""
+the 14.01 N basis.
+15 Nov 2026: re-run at the CG after the modularity changes (opt.X_CG 0.4836): 21.95 kt with 13.66 N on the rudder, 41.13 N on
+the foil and 13.37 Nm; at 22.15 kt 13.92 N, 0.09 N under the basis."""
 import io, contextlib, numpy as np
 with contextlib.redirect_stdout(io.StringIO()):
     import r250c as R
