@@ -133,3 +133,12 @@ Lukas (15 Nov 2026): make things modular so a broken or wrongly scaled part is e
 - Specs 00 (new PROPOSED row) and 03 (new bullet) take it. Not changed: the one-piece steel unit and the constant-profile strut stay DECIDED until Lukas confirms; the Weight Budget (about +30 g for the pair, lead 120 -> about 90 g) waits for his OK; opt.py and section 11 do not carry the fuselage drag yet.
 - Seen in passing: the height-sensor bodies in Hull_v2 have the material Steel, so Fusion reports them at 211 g; the Weight Budget's 30 g is right.
 
+## 15 Nov 2026 - Weight Budget and CG for the removable wing
+
+Lukas (15 Nov 2026): update the sheet.
+- Weight Budget (no formulas touched): row 26 is now the layout B underwater unit, 320.1 g per side (low 307, high 334) at x 520.7, z -227.0 from Hull_v2 version 30 (wing 247.8 g, strut with foot 60.5 g, Ti fuselage 11.5 g, two M2 Ti screws 0.4 g; was 305.8 g at x 520.8, z -226.5); row 70 lead 2 x 60 -> 2 x 45.7 g (91.4 g, -28.6 g, to hold 2800 g; volume note 8.0 cm3); A2 and A18 notes. Read back: total 2800.0 g, foils and arms 1449.4 g, CG x 484.50, z 2.56 (from 484.63, 4.69).
+- cg_layout.py: row 26 and SHEET_CG 484.495 / 2.565; it reproduces the sheet. Static margin 11.9% (12.0%), CG 60.5 mm ahead of the neutral point and 41.9 mm aft of the main foil, trim at rest 0.48 deg, T-foil force at 10 kt -2.69 N (unchanged); the lead now moves the CG 3.3 mm per 100 mm, and putting the CG at 490.7 mm with the lead alone would need it at x 721.
+- opt.X_CG stays 0.4846: the CG moved 0.13 mm, worth about 0.01 N of rudder load, so the VPP chain was not re-run. The fuselage drag is still outside opt.py (specs/03).
+- Specs 00, 01-02, 03, 08, 09-10 and the README take the new lead and CG; specs/09-10 also had a stale 128 g ballast and 482 mm CG, now 91.4 g and 484.5 mm, with the range 2449-3403 g.
+- The lead covers only about 3% of the rest of the boat now; one more change of this size (about 30 g) leaves about 60 g.
+
