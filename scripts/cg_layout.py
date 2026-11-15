@@ -26,11 +26,11 @@ WB = [
     (21, 'Hull shell, bottom, lower topsides and transom', 122.3, 454.3, -9.5, 'fixed'),
     (22, 'Deck and upper topsides', 131.0, 449.8, 49.6, 'fixed'),
     (23, 'Internal structure, rest (mast step, rudder mount, ballast mounts, hatch frames)', 77.0, 430.0, 10.0, 'fixed'),
-    (24, 'Hatches x2 (flight-control bay + radio bay)', 50.0, 575.0, 66.0, 'move'),
+    (24, 'Hatches: flight-control + radio bay, plus four gimbal service hatches', 69.2, 557.2, 64.9, 'move'),
     (25, 'Foil arm, upper (carbon) x2', 93.2, 531.8, -40.5, 'fixed'),
     (26, 'Underwater unit x2, layout B (removable wing, Ti fuselage, strut foot)', 640.2, 520.7, -227.0, 'fixed'),
     (27, 'Gimbal rev F rake fork with arm socket, bonded insert, M4 bolts (Ti) x2', 104.8, 532.6, 19.6, 'fixed'),
-    (28, 'Gimbal rev E3 cant group x2', 83.6, 527.9, 31.9, 'fixed'),
+    (28, 'Gimbal rev E3 cant group x2 (removable headed rake pin)', 84.6, 527.9, 31.9, 'fixed'),
     (29, 'Arm rake servo AGF A66BHLW + horn and link x2', 133.8, 531.2, 49.8, 'fixed'),
     (30, 'Cant drive rev E3 x2', 393.0, 481.2, 29.1, 'fixed'),
     (31, 'Gimbal bushings and seals x2', 15.0, 531.4, 30.6, 'fixed'),
@@ -74,7 +74,7 @@ WB = [
     (69, 'Fasteners', 15.0, 480.0, 15.0, 'fixed'),
     (70, 'Lead ballast, two blocks between the pivot bulkheads', None, 531.4, -30.0, 'lead'),
 ]
-SHEET_CG = (484.355, 2.874)   # Weight Budget row 18 on 15 Nov 2026 (removable wing, arm root and rudder blade; 484.501, 2.875 before the blade; 484.495, 2.565 with the wing only; 484.626, 4.686 on 14 Nov with the sensor at x 800; 481.749, 4.604 on 5 Nov)
+SHEET_CG = (484.213, 3.527)   # Weight Budget row 18 on 15 Nov 2026 (removable wing, arm root, rudder blade, gimbal service hatches; 484.355, 2.874 before the hatches; 484.501, 2.875 before the blade; 484.495, 2.565 with the wing only; 484.626, 4.686 on 14 Nov with the sensor at x 800; 481.749, 4.604 on 5 Nov)
 
 
 def rig_x(row, x_m):
