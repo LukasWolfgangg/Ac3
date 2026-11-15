@@ -7,7 +7,7 @@ def strut(V,c,L,tc): return CAL*2*cf(V*c/nu)*form(tc)*0.5*rho*V*V*c*L
 Re_pts=np.array([100e3,134e3,206e3,247e3,298e3,400e3]); cd_pts=np.array([0.0146,0.0122,0.0093,0.0082,0.0074,0.0065]) # 27 Sep 2026: main foil section E226 (NeuralFoil, Ncrit 9, at the operating CL for each Re); was E817: Re [103e3,288e3,412e3,514e3], CD [0.0257,0.0142,0.0105,0.0088]
 def cd0f(Re): return np.interp(np.log(Re),np.log(Re_pts),cd_pts)
 LWL=0.98 # 28 Oct 2026: Hull_v2 rev 4 waterline length at 2.80 kg (was 0.9, Hull_v1). Only the pre-takeoff hull-drag Froude number uses it.
-PIVOT_Y=0.1146 # 28 Oct 2026: arm pivot at 84% of the Hull_v2 half-beam at the pivot station (136.45 mm, measured on the rev 4 loft, 531 mm from the transom) -> 114.6 mm off the centreline; 86% does not fit the rev D gimbal. Was 0.86*0.118 (101.5 mm, scaled from the AC75 loft). Cant torque still uses reach (pivot-to-foil) only.
+PIVOT_Y=0.1216 # 15 Nov 2026: gimbal rev G moves the pivot 7 mm outboard (121.6 mm, 89% of the half-beam; PROPOSED). Was 0.1146, 28 Oct 2026: arm pivot at 84% of the Hull_v2 half-beam at the pivot station (136.45 mm, measured on the rev 4 loft, 531 mm from the transom) -> 114.6 mm off the centreline; 86% does not fit the rev D gimbal. Was 0.86*0.118 (101.5 mm, scaled from the AC75 loft). Cant torque still uses reach (pivot-to-foil) only.
 # 28 Oct 2026 (evening): the rudder T-foil load for PERFORMANCE now comes from the pitch balance while foiling (cg_layout.py,
 # Design & Specs section 8), speed by speed: weight about the main foil, the sail drive / drag couple (drive at the centre of
 # effort CE above the waterline, drag at Z_DRAG) and the E226 section pitching moment. Positive = downforce. The righting
@@ -16,8 +16,8 @@ PIVOT_Y=0.1146 # 28 Oct 2026: arm pivot at 84% of the Hull_v2 half-beam at the p
 # the old performance model.
 RUD_STRUCT = 0.5101   # 29 Oct 2026: STRUCTURAL rudder downforce per unit weight = the pitch-balance load on the top reach of the design
 # window (12 kt of wind, TWA 105 deg, 22.15 kt; top_reach.py): 14.01 N / 27.47 N at 2.80 kg. Replaces the 175/550 rule (0.318, 8.74 N).
-X_CG, X_FOIL, X_RUD, Z_DRAG = 0.4818, 0.5264, 0.020, -0.200   # m from the transom / waterline: all-up CG (Weight Budget row 18,
-# 30 Oct 2026, after rudder rev B; mast at 600 mm assumed; was 0.4907 on the 28 Oct layout, cg_layout.py), main foil quarter chord (CAD),
+X_CG, X_FOIL, X_RUD, Z_DRAG = 0.4836, 0.5264, 0.020, -0.200   # m from the transom / waterline: all-up CG (Weight Budget row 18,
+# 15 Nov 2026, after the modularity changes; 0.4846 on 14 Nov with the height sensor at x 800; 0.4817 on 5 Nov, 0.4818 on 30 Oct after rudder rev B; mast at 600 mm assumed; was 0.4907 on the 28 Oct layout, cg_layout.py), main foil quarter chord (CAD),
 # rudder stock (CAD, Hull_v2 Rudder_A), drag centre (assumed)
 CM_E226 = {133000: [(-0.090, -0.0127), (0.152, -0.0388), (0.251, -0.0473), (0.323, -0.0503), (0.417, -0.0457), (0.495, -0.0373), (0.580, -0.0297), (0.670, -0.0239)],
            206000: [(-0.020, -0.0254), (0.123, -0.0299), (0.198, -0.0333), (0.272, -0.0367), (0.399, -0.0391), (0.495, -0.0353), (0.581, -0.0294), (0.669, -0.0240)],

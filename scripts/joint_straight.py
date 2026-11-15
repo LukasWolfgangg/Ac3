@@ -144,7 +144,7 @@ if __name__ == '__main__':
         def drag(s, V, foilborne=True):
             return R.C2.drag(s, V, foilborne) + (s.mult*(arm(V) - base(V)) if s.dd else 0.0)
     def mk(dd):
-        c = C3('x', Wkg=R.W, reach=R.reach, A=R.A, tc=0.17, ac=0.038, bc=0.034, Lw=R.Wetted/1000, Lb=R.LB, rigAR=2.4, CD0s=0.06, es=0.80)   # Lb: 30 Oct 2026, the 136 mm wetted rudder blade (r250c.LB)
+        c = C3('x', Wkg=R.W, reach=R.reach, A=R.A, tc=0.17, ac=0.038, bc=R.BC, Lw=R.Wetted/1000, Lb=R.LB, rigAR=2.4, CD0s=0.06, es=0.80)   # Lb: 30 Oct 2026, the 136 mm wetted rudder blade (r250c.LB)
         c.hyb = R.h; c.dd = dd; return c
     for dd, lab in ((False, 'now (thin 22 mm strut to 135 mm)'), (True, 'straight steel + 1.5 mm UD sleeve')):
         c = mk(dd)

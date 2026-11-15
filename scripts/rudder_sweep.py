@@ -20,7 +20,7 @@ Not modelled: free-surface ventilation of the blade, induced drag of the blade (
 junction strength, the stock and bearing redesign beyond the stock diameter below, wave and gust response.
 Heel / pitch envelope is ASSUMED (nothing in the repo fixes it except the main foil's own 5.7 deg ventilation slack, specs/03).
 Sign convention: pitch is taken bow DOWN as the worst case (the stern rises, the rudder tip gets shallower); heel is to leeward
-(the leeward foil carries the boat, so the centreline rudder rises relative to it by 364.6 mm x sin(heel)).
+(the leeward foil carries the boat, so the centreline rudder rises relative to it by 371.6 mm x sin(heel); 364.6 mm before gimbal rev G, 15 Nov 2026).
 """
 import io, contextlib, math
 import numpy as np
@@ -33,7 +33,7 @@ TC, NPLY = 0.17, 4
 Z_THIN = AIR - 15.0                      # thin section starts here (mm below the hull)
 D_FOIL = 136.0                           # main foil depth at the design ride (rudder_limit.py docstring)
 Z_FOIL_REL = 220.2                       # L at which the T-foil is exactly as deep as the main foil at the design ride (220 mm blade = 135.8 mm)
-Y_LAT, X_AFT = 364.6, 506.0              # foil lateral offset from the centreline; foil-to-rudder distance (mm)
+Y_LAT, X_AFT = 371.6, 506.0              # foil lateral offset from the centreline; foil-to-rudder distance (mm)
 T_CH, T_SPAN = 30.0, 120.0               # S9033 T-foil
 X_LEVER = (481.8 - 20.0) / 1000.0        # rudder to the all-up CG, m (Weight Budget, 30 Oct 2026)
 RE = np.array([5e4, 7e4, 1e5, 1.5e5, 2e5, 3e5]); CD0 = np.array([.03229, .02541, .02003, .01624, .01412, .01182])   # NeuralFoil, E864 at 17%, alpha 0

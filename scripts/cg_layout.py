@@ -14,8 +14,8 @@ import math
 G = 9.81
 X_LCB, X_FOIL, Z_FOIL, X_RUD = 443.0, 526.4, -239.4, 20.0   # LCB (Design & Specs section 2); main foil quarter chord (CAD); rudder stock (CAD, Rudder_A)
 TARGET = 2800.0
-DRAG = {6.5: 2.45, 10: 3.90, 12: 4.92, 14.5: 6.40}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4818
-# and the 136 mm wetted rudder blade, 30 Oct 2026; was 2.42/3.81/4.78/6.20 at x 490.7 with a 119 mm blade)
+DRAG = {6.5: 2.43, 10: 3.87, 12: 4.87, 14.5: 6.32}          # N, total foil-borne drag from the VPP at this CG (r250c.py with opt.X_CG 0.4836, 15 Nov 2026; 2.44 at 6.5 kt with 0.4846
+# and the 156 mm wetted, 34 -> 20 mm rudder blade, 14 Nov 2026; 2.43/3.86/4.87/6.32 at 0.4817 on 5 Nov; was 2.45/3.90/4.92/6.40 with the 136 mm blade; these are c.drag(V, True), not the r250c.py breakdown totals)
 H_CE, Z_DRAG = 395.0, -200.0                                 # sail centre of effort above the waterline (Design & Specs, an assumption there too); drag centre (A)
 GML = 5.0                                                    # m, longitudinal metacentric height, estimated from the Hull_v2 waterplane (A)
 DECK_M = 71.0                                                # deck height at the mast (A)
@@ -25,23 +25,23 @@ DECK_M = 71.0                                                # deck height at th
 WB = [
     (21, 'Hull shell, bottom, lower topsides and transom', 122.3, 454.3, -9.5, 'fixed'),
     (22, 'Deck and upper topsides', 131.0, 449.8, 49.6, 'fixed'),
-    (23, 'Internal structure, rest (mast step, rudder mount, ballast mounts, hatch frames)', 77.0, 430.0, 10.0, 'fixed'),
-    (24, 'Hatches x2 (flight-control bay + radio bay)', 50.0, 575.0, 66.0, 'move'),
+    (23, 'Internal structure, rest (mast step and track, rudder mount, lead rail, hatch frames)', 86.5, 448.8, 7.7, 'fixed'),
+    (24, 'Hatches: flight-control + radio bay, plus four gimbal service hatches', 69.2, 557.2, 64.9, 'move'),
     (25, 'Foil arm, upper (carbon) x2', 93.2, 531.8, -40.5, 'fixed'),
-    (26, 'Steel underwater unit x2', 611.6, 520.8, -226.5, 'fixed'),
-    (27, 'Gimbal rev E3 rake fork (Ti) x2', 84.4, 532.7, 21.3, 'fixed'),
-    (28, 'Gimbal rev E3 cant group x2', 83.6, 527.9, 31.9, 'fixed'),
+    (26, 'Underwater unit x2, layout B (removable wing, Ti fuselage, strut foot)', 640.2, 520.7, -227.0, 'fixed'),
+    (27, 'Gimbal rev G rake fork (stub-axle hinge housing, bridge, horn, arm socket), insert, M4 bolts x2', 96.6, 532.6, 16.5, 'fixed'),
+    (28, 'Gimbal rev G cant group x2 (shaft with 22 x 22 block and 12 mm stub axle, cradle)', 102.6, 528.5, 31.7, 'fixed'),
     (29, 'Arm rake servo AGF A66BHLW + horn and link x2', 133.8, 531.2, 49.8, 'fixed'),
     (30, 'Cant drive rev E3 x2', 393.0, 481.2, 29.1, 'fixed'),
-    (31, 'Gimbal bushings and seals x2', 15.0, 531.4, 30.6, 'fixed'),
+    (31, 'Gimbal bushings, rake bearings, seals and arm-window flaps x2', 19.8, 531.6, 27.3, 'fixed'),
     (32, 'Cant motor drivers x2', 6.0, 470.0, 20.0, 'fixed'),
     (33, 'Pivot bulkheads x2', 88.4, 531.3, 23.0, 'fixed'),
     (34, 'Rudder stock, collar and cap', 29.2, 20.0, 26.0, 'fixed'),
-    (35, 'Rudder blade (220 mm)', 21.0, 14.2, -120.3, 'fixed'),
-    (36, 'Rudder T-foil', 7.2, 16.0, -240.2, 'fixed'),
+    (35, 'Rudder blade, removable (240 mm, 34->20 mm taper, solid tip plug, Ti socket tube, set screw)', 20.2, 15.0, -117.8, 'fixed'),
+    (36, 'Rudder T-foil', 7.2, 16.0, -260.2, 'fixed'),
     (37, 'Rudder rake actuator (AGF A50BHLW, rev B)', 55.9, 69.2, 4.8, 'fixed'),
     (38, 'Rudder steering (Savox SW-0250MG, rev B)', 34.9, 55.5, 10.3, 'fixed'),
-    (39, 'Rudder structure (well, carrier, cassette, deck cover, tripod)', 18.3, 23.8, 26.6, 'fixed'),
+    (39, 'Rudder structure (well, carrier, cassette, deck cover, tripod)', 20.0, 24.8, 28.6, 'fixed'),
     (40, 'Mast', 153.0, None, 554.0, 'rig'),
     (41, 'Boom', 24.1, None, 131.0, 'rig'),
     (42, 'Mainsail', 27.4, None, 644.0, 'rig'),
@@ -61,9 +61,9 @@ WB = [
     (56, 'Rig fittings', 12.0, None, 300.0, 'rig'),
     (57, 'Microcontroller', 7.0, 500.0, -5.0, 'move'),
     (58, 'IMU', 3.0, 500.0, -5.0, 'move'),
-    (59, 'Height sensor (under the hull at the pivot station)', 20.0, 531.4, -40.0, 'fixed'),
+    (59, 'Height sensor recessed in the bow on a screwed bracket (Hull_v2 version 29)', 22.0, 800.0, -10.0, 'fixed'),
     (60, 'Flight-control battery/BEC', 35.0, 500.0, -5.0, 'move'),
-    (61, 'Flight-control wiring and enclosure', 30.0, 500.0, -5.0, 'move'),
+    (61, 'Flight-control wiring, enclosure, removable tray and connector block', 39.0, 500.0, -5.0, 'move'),
     (62, 'Flight-control mounting and potting', 15.0, 500.0, -5.0, 'move'),
     (63, 'Receiver', 14.0, 650.0, 10.0, 'move'),
     (64, 'Power switch and charge lead', 6.0, 650.0, 10.0, 'move'),
@@ -74,7 +74,7 @@ WB = [
     (69, 'Fasteners', 15.0, 480.0, 15.0, 'fixed'),
     (70, 'Lead ballast, two blocks between the pivot bulkheads', None, 531.4, -30.0, 'lead'),
 ]
-SHEET_CG = (481.750, 4.562)   # Weight Budget row 18 on 30 Oct 2026
+SHEET_CG = (483.578, 4.037)   # Weight Budget row 18 on 15 Nov 2026 (gimbal rev G and the window flaps; 483.581, 3.818 before them, after the modularity changes; 484.213, 3.527 before the small items; 484.355, 2.874 before the hatches; 484.501, 2.875 before the blade; 484.495, 2.565 with the wing only; 484.626, 4.686 on 14 Nov with the sensor at x 800; 481.749, 4.604 on 5 Nov)
 
 
 def rig_x(row, x_m):
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     L0 = items()
     m, x, z = cg(L0)
     lead = [i for i in L0 if i[5] == 'lead'][0][2]
-    print('Weight Budget snapshot (30 Oct 2026): %.1f g, CG x %.2f z %.2f (sheet row 18: x %.2f z %.2f); lead %.1f g (2 x %.1f g)' % (m, x, z, SHEET_CG[0], SHEET_CG[1], lead, lead / 2))
+    print('Weight Budget snapshot (15 Nov 2026): %.1f g, CG x %.2f z %.2f (sheet row 18: x %.2f z %.2f); lead %.1f g (2 x %.1f g)' % (m, x, z, SHEET_CG[0], SHEET_CG[1], lead, lead / 2))
     for kind in ('fixed', 'rig', 'move', 'lead'):
         mk, xk, zk = cg([i for i in L0 if i[5] == kind])
         print('  %-5s %7.1f g at x %6.1f z %6.1f' % (kind, mk, xk, zk))
@@ -191,7 +191,7 @@ if __name__ == '__main__':
         return xx
     show('as is (Weight Budget)', L0)
     show('2S battery to the radio bay (x 650)', items(moves={66: 650.0}))
-    show('flight-control bay forward to x 560 (sonar stays at the pivot)', items(moves={57: 560.0, 58: 560.0, 60: 560.0, 61: 560.0, 62: 560.0}))
+    show('flight-control bay forward to x 560 (sonar stays in its bow pod)', items(moves={57: 560.0, 58: 560.0, 60: 560.0, 61: 560.0, 62: 560.0}))
     show('battery to x 650 and the flight-control bay to x 560', items(moves={66: 650.0, 57: 560.0, 58: 560.0, 60: 560.0, 61: 560.0, 62: 560.0}))
     for lx in (600.0, 650.0):
         show('lead forward to x %.0f' % lx, items(lead_x=lx))
