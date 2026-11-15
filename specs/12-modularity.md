@@ -12,7 +12,7 @@ Status tags as in 00-concept-and-decision-log.md. Started 15 Nov 2026, at the bu
 | Rake servo | Servo cradle | Servo ears; rake link pin | Servo-bay service hatch | Section 3, gimbal service access |
 | Cant motor, spur pair, encoder | Worm housing | Motor plate screws | Worm-bay service hatch (pinion and encoder open, see 12.4) | Section 3, gimbal service access |
 | Worm + bearings | Worm housing, bolt-on top cap | Cap screws | Worm-bay hatch, cap off; the worm unscrews out of the sector (arm off) | Section 3, gimbal service access |
-| Worm sector, cross shaft, cradle, fork | Slide the cross shaft forward | Rake pin (headed, M3 grub), sector and cradle pins | Rake pin outboard through the plugged d7.5 side hole at cant 0; both service hatches | Section 3, gimbal service access |
+| Worm sector, cross shaft, cradle, fork | OPEN: no path yet | - | The shaft cannot slide out: its rake block cannot pass the 18 mm bushing hole (the rev E3 block's corners were 11.2 mm from the axis against a 9 mm hole, and rev G's 22 x 22 mm block is bigger). Options: a split block, or a bolt-on sector. The fork can come off the rev G stub axle by sliding inboard about 15 mm (the cradle is cut clear) once the arm is off | Section 3, gimbal rev G |
 | Height sensor | Screwed bracket on its pocket (not drawn yet) | 2 x M3 through the A02YYUW ears | Needs a way in at x 800 (see 12.4) | Section 3, sensor placement |
 | Flight-control electronics | Removable tray (not drawn yet) | Tray screws; one connector block | Flight-control bay hatch | 12.3 |
 | Lead | Screwed blocks on a rail (not drawn yet) | M3 into threaded inserts | Dry bay inboard of the wet wells | 12.3 |
@@ -26,7 +26,7 @@ One spare of each, in order of likely need: wing with fuselage (both sides use t
 
 ## 12.3 Packaging rules for parts not drawn yet
 
-- **Cross-shaft withdrawal path:** keep about 100 mm clear ahead of the fore pivot bulkhead along the cross-shaft line (y 105-124, z 25-36 at the pivot station), both sides, so the shaft and the worm sector can come out. Nothing in the flight-control bay may sit in that space.
+- **Cross-shaft withdrawal path:** dropped 15 Nov 2026 - the shaft cannot pass the bushing holes (12.1), so this space is not needed until a split block or bolt-on sector is designed.
 - **Electronics tray:** the flight controller, IMU, motor drivers and receiver sit on one removable PA12-CF tray under the flight-control bay hatch, with one connector block for every lead that leaves it (servos, cant motors, encoders, sensor, battery), so the tray unplugs and lifts out without unsoldering. The IMU stays rigidly screwed to the tray; the tray is screwed to the hull, not clipped.
 - **Lead:** the lead blocks are screwed (M3) to a bonded ply rail with threaded inserts at a 10 mm pitch, so they can be re-trimmed and moved fore and aft; it is a weak lever now (Weight Budget and section 8).
 - **Mast step:** a track or a row of step positions instead of one fixed step, so the mast can move fore and aft; the mast step is the strongest CG lever left (section 8). Range and pitch to be set when the rig is drawn.
@@ -49,5 +49,5 @@ Titanium (Ti-6Al-4V) screws throughout, isolated from carbon where they sit in i
 |---|---|---|
 | M1.6 | Steel-to-carbon joint screw | Bonded joint, not a service fastener |
 | M2 | Wing to strut foot; service-hatch lids | |
-| M3 | Rake-pin grub screw; sensor bracket; lead rail; tray; the rudder set screw (to be changed from M2.5) | |
+| M3 | Sensor bracket; lead rail; tray; the rudder set screw (to be changed from M2.5) | (the rake-pin grub screw went with the rake pin in gimbal rev G) |
 | M4 | Arm socket bolts | M3 fails there (section 3) |

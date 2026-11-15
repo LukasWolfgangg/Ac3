@@ -6,7 +6,7 @@ but does not compensate for heel. The T-foil keeps at least 3 T-foil chords (90 
 the T-foil, kept by the builder).
 
 Model (same as rudder_sweep.py): the leeward foil is held at its design depth (D_FOIL, 136 mm). Heel to leeward raises the centreline
-rudder relative to the foil by Y_LAT x sin(heel) (364.6 mm), bow-down pitch raises it by X_AFT x sin(pitch) (506 mm); heel to windward
+rudder relative to the foil by Y_LAT x sin(heel) (371.6 mm since gimbal rev G, 15 Nov 2026; 364.6 mm before), bow-down pitch raises it by X_AFT x sin(pitch) (506 mm); heel to windward
 and bow-up pitch lower it by the same amounts. The air gap under the stern hull (84.2 mm at the design ride) follows the same way.
   1. T-foil depth over the leeward / bow-down corners, and the blade length each corner needs for 90 mm.
   2. The combined budget Y_LAT sin(heel) + X_AFT sin(pitch) that keeps 90 mm over the centre, and the soft guard set against the shallow-side tip
@@ -32,7 +32,7 @@ TIP_HALF = 60.0                            # mm, half the T-foil span: the shall
 MOUNT_PITCH, NEED_6_5, NEED_14_5 = 2.6, 5.0, 0.2   # deg: foil mount pitch (Foilarm_v5 / Weight Budget), E226 incidence needed at 6.5 and 14.5 kt (specs/03, foil.tools AeroBuildup 27 Sep 2026)
 RAKE_POS, RAKE_NEG = 4.92, 4.96            # deg, arm rake range (Hull_v2 Servo_horn joint)
 Y_LAT, X_AFT, AIR0, D_FOIL, ZT = rs.Y_LAT, rs.X_AFT, rs.AIR, rs.D_FOIL, rs.Z_THIN
-GUARD_COEF = Y_LAT + TIP_HALF              # mm: the guard is set against the shallow-side TIP (builder, 5 Nov 2026), so heel counts for 424.6 mm x sin(heel), not 364.6
+GUARD_COEF = Y_LAT + TIP_HALF              # mm: the guard is set against the shallow-side TIP (builder, 5 Nov 2026), so heel counts for 431.6 mm x sin(heel), not 371.6 (424.6 and 364.6 before gimbal rev G)
 sind = lambda a: math.sin(math.radians(a))
 
 # ---- blade with the thick root: chord and t/c by depth below the hull ----

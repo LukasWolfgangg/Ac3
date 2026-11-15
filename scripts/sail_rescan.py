@@ -5,6 +5,7 @@
 # crashes (spawn needs a main guard); run it with concurrent.futures.ProcessPoolExecutor replaced by ThreadPoolExecutor.
 # 14 Nov 2026: re-run with the CG at 484.6 mm (opt.X_CG 0.4846, height sensor under the bow); same Windows workaround.
 # 15 Nov 2026: re-run with the CG at 483.6 mm (opt.X_CG 0.4836, after the modularity changes); same workaround.
+# 15 Nov 2026 (later): re-run with the gimbal rev G pivot (opt.PIVOT_Y 0.1216); same workaround.
 # 28 Sep 2026: re-run for the 135 mm joint. Every weight now uses the chosen arm (22 mm x 18% steel to the 135 mm joint, 40 mm x 20% carbon above):
 # with the joint on the vertical run the wet steel section no longer depends on weight, and the carbon upper arm is dry, so re-sizing it for weight
 # changes its mass, not the drag. (Was: arm re-sized per weight with r250.best_hyb at the 280 mm joint.)

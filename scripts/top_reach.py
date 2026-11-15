@@ -11,7 +11,9 @@ load is 13.82 N. Still inside the structural basis.
 13.72 N on the rudder, 41.18 N on the foil and 13.38 Nm of design cant torque; at 22.15 kt the rudder load is 13.98 N, 0.03 N under
 the 14.01 N basis.
 15 Nov 2026: re-run at the CG after the modularity changes (opt.X_CG 0.4836): 21.95 kt with 13.66 N on the rudder, 41.13 N on
-the foil and 13.37 Nm; at 22.15 kt 13.92 N, 0.09 N under the basis."""
+the foil and 13.37 Nm; at 22.15 kt 13.92 N, 0.09 N under the basis.
+15 Nov 2026 (later): gimbal rev G, opt.PIVOT_Y 0.1216: 22.05 kt at TWA 105 with 13.79 N, 41.26 N and 13.41 Nm; the sail side
+force on that reach is 38.5 N (the basis has 38.0 N); 13.92 N at 22.15 kt."""
 import io, contextlib, numpy as np
 with contextlib.redirect_stdout(io.StringIO()):
     import r250c as R

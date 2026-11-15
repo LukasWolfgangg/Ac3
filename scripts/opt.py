@@ -7,7 +7,7 @@ def strut(V,c,L,tc): return CAL*2*cf(V*c/nu)*form(tc)*0.5*rho*V*V*c*L
 Re_pts=np.array([100e3,134e3,206e3,247e3,298e3,400e3]); cd_pts=np.array([0.0146,0.0122,0.0093,0.0082,0.0074,0.0065]) # 27 Sep 2026: main foil section E226 (NeuralFoil, Ncrit 9, at the operating CL for each Re); was E817: Re [103e3,288e3,412e3,514e3], CD [0.0257,0.0142,0.0105,0.0088]
 def cd0f(Re): return np.interp(np.log(Re),np.log(Re_pts),cd_pts)
 LWL=0.98 # 28 Oct 2026: Hull_v2 rev 4 waterline length at 2.80 kg (was 0.9, Hull_v1). Only the pre-takeoff hull-drag Froude number uses it.
-PIVOT_Y=0.1146 # 28 Oct 2026: arm pivot at 84% of the Hull_v2 half-beam at the pivot station (136.45 mm, measured on the rev 4 loft, 531 mm from the transom) -> 114.6 mm off the centreline; 86% does not fit the rev D gimbal. Was 0.86*0.118 (101.5 mm, scaled from the AC75 loft). Cant torque still uses reach (pivot-to-foil) only.
+PIVOT_Y=0.1216 # 15 Nov 2026: gimbal rev G moves the pivot 7 mm outboard (121.6 mm, 89% of the half-beam; PROPOSED). Was 0.1146, 28 Oct 2026: arm pivot at 84% of the Hull_v2 half-beam at the pivot station (136.45 mm, measured on the rev 4 loft, 531 mm from the transom) -> 114.6 mm off the centreline; 86% does not fit the rev D gimbal. Was 0.86*0.118 (101.5 mm, scaled from the AC75 loft). Cant torque still uses reach (pivot-to-foil) only.
 # 28 Oct 2026 (evening): the rudder T-foil load for PERFORMANCE now comes from the pitch balance while foiling (cg_layout.py,
 # Design & Specs section 8), speed by speed: weight about the main foil, the sail drive / drag couple (drive at the centre of
 # effort CE above the waterline, drag at Z_DRAG) and the E226 section pitching moment. Positive = downforce. The righting
