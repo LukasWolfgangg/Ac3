@@ -180,3 +180,10 @@ Lukas (15 Nov 2026): gimbal next; full cassette; then service hatches (after the
 - Weight Budget (no formulas touched; no rows inserted, because the summary ranges stop at row 70 and the specs cite row numbers): row 24 now holds all hatches, 69.2 g (low 55, high 100) at x 557.2, z 64.9 (the two 25 g bay hatches plus four service hatches at 4.8 g net each); row 28 cant group 42.3 g per side for the removable pin; lead 2 x 35.1 -> 2 x 25.0 g (50.0 g); A2 and A18 notes. Read back: total 2800.0 g, hull and deck 487.9 g, CG x 484.21, z 3.53. cg_layout.py rows 24 and 28 and SHEET_CG 484.213 / 3.527 reproduce it: static margin 11.9%; the lead now moves the CG 1.8 mm per 100 mm and would have to sit at x 895 to reach 490.7 mm. opt.X_CG stays 0.4846.
 - Specs 00 (new PROPOSED row), 03 (new gimbal-access bullet), 01-02, 08, 09-10 and the README take it. Fusion is still offline: all saves since version 30 are local only.
 
+## 15 Nov 2026 - specs/12: modularity and service
+
+Lukas (15 Nov 2026): small items.
+- New specs/12-modularity.md (all PROPOSED): the module list with where each comes off, its fasteners, how it is reached and which section holds its numbers; the spares order; packaging rules for parts not yet drawn (the cross-shaft withdrawal path, an electronics tray with one connector block, lead screwed to a ply rail with 10 mm-pitch inserts, a mast step track, a screwed bracket for the height sensor); the open items (pinion and encoder access, no way in at the sensor at x 800, the arm-socket hull slot, the fastener standard not yet applied in CAD); and a fastener standard (Ti; M1.6 bonded joint only, M2, M3, M4).
+- CLAUDE.md's specs list now names section 12.
+- Nothing drawn and nothing in the Weight Budget yet: the tray, connector block, lead rail, mast track and sensor bracket are estimated at about 20 g together, to be booked when Lukas agrees or when they are drawn.
+

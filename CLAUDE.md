@@ -6,7 +6,7 @@ Owner: Lukas. Direct, no flattery: if a decision or number looks wrong, say so a
 AC40-style foiling RC monohull, active flight control (PID + IMU + sonar). Target: 10-12 kt true wind, ~10 kt boat speed upwind, foil-borne from <= 8.75 kt of wind. Single leeward foil at a time, cant arms (reach cap 250 mm), steel wet foil unit + carbon upper arm. Current design state lives in the `specs/` files (single source of truth, split from the Drive doc "Design & Specs").
 
 ## Layout
-- `specs/` - source of truth for every spec (00 concept + decision log, 01-02 dimensions/hull, 03 foils, 04-05 rudder/rig, 08 open confirmations, 09-10 weight + risks, 11 performance). Other docs POINT to it, never restate numbers. Section 6-7 (flight control) is in the Drive doc 'Flight Control Electronics - Build Plan'.
+- `specs/` - source of truth for every spec (00 concept + decision log, 01-02 dimensions/hull, 03 foils, 04-05 rudder/rig, 08 open confirmations, 09-10 weight + risks, 11 performance, 12 modularity and service). Other docs POINT to it, never restate numbers. Section 6-7 (flight control) is in the Drive doc 'Flight Control Electronics - Build Plan'.
 - `docs/build-log.md` - history of changes. Specs state current values only.
 - `docs/mechanisms/` - foil arm, rudder, hydrodynamic loads, rig & sail.
 - `docs/tests/` - bench-test methods.
