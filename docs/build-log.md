@@ -216,3 +216,11 @@ Lukas (15 Nov 2026): move the foil pivots closer to the hull edge to shrink the 
 - Specs 00 (rev G row PROPOSED; the DECIDED 84% row noted as superseded in CAD and the VPP pending Lukas), 01-02, 03 (rev G bullet, righting moment, cant torque, guard figures), 04-05 (heel limits 39.0 / 50.7 N, 20.0 Nm), 08, 09-10, 11 (all regenerated figures), 12 (sector OPEN, withdrawal path dropped) and the README; script headers.
 - Not done: the Weight Budget (rev G +4.4 g and the flaps, waiting for Lukas's OK); floor slope and foam in the wet well (not drawn); hatch lift-out checks for the moved parts; worm-housing bolt holes on the aft bulkhead; starboard gimbal not drawn.
 
+## 15 Nov 2026 - Weight Budget and CG for gimbal rev G and the window flaps
+
+Lukas (15 Nov 2026): yes, update the sheet.
+- Found in Hull_v2 version 34 before reading masses: the crash recovery had reset the materials of the two M4 socket bolts, the two rev G rake bearings and the two M2 wing screws to a default steel (bolts read 1.29 g, bearings 1.92 g); set back to Ti-6Al-4V and iglidur G. The rake servo horn joint stood at -15 deg (rake -2.97 deg), which moved the wing unit's centre to x 534.0; set back to 0, which restores row 26's x 520.7, z -227.0. Both are unsaved display/position changes in Hull_v2.
+- Weight Budget (no formulas touched): row 27 fork rev G with insert and bolts 48.3 g per side (low 46, high 53) at x 532.6, z 16.5 (was 52.4 g at z 19.6); row 28 cant group 51.3 g (48 / 56) at x 528.5, z 31.7 (was 42.3 g); row 31 bushings, rake bearings, seals, bosses and the two neoprene window flaps 9.9 g (8.5 / 12) at x 531.6, z 27.3 (was 7.5 g); lead 2 x 19.75 -> 2 x 12.45 g (24.9 g, -14.6 g); A2 and A18 notes. Read back: total 2800.0 g, foils and arms 1485.2 g, CG x 483.58, z 4.04.
+- cg_layout.py rows 27, 28, 31 and SHEET_CG 483.578 / 4.037 reproduce it; static margin 11.8% unchanged; the lead now moves the CG 0.9 mm per 100 mm and would have to sit at x 1332 to reach 490.7 mm. opt.X_CG stays 0.4836.
+- Specs 00, 01-02, 03, 08, 09-10 and the README take the new lead and CG.
+
