@@ -160,3 +160,12 @@ Lukas (15 Nov 2026): update the sheet.
 - cg_layout.py: row 27 and SHEET_CG 484.501 / 2.875; it reproduces the sheet. Static margin 11.9%, T-foil force at 10 kt -2.69 N (unchanged); the lead now moves the CG only 2.5 mm per 100 mm, and putting the CG at 490.7 mm with the lead alone would need it at x 776. opt.X_CG stays 0.4846.
 - Specs 00, 01-02, 03, 08, 09-10 and the README take the new lead and CG. The lead now covers only about 2.6% of the rest of the boat; Lukas (15 Nov 2026): the boat will go over 2800 g, finish the modularity first.
 
+## 15 Nov 2026 - removable rudder blade; Weight Budget and CG; Fusion found offline
+
+Lukas (15 Nov 2026): rudder next; save and update all.
+- Hull_v2 (Rudder_blade): the stock ran 16.5 mm into the solid blade root (z -26 to -9.5, root 9.1-10 mm thick) as an overlap, with no bond drawn. Base_removable_blade_socket_tube_screw_tools adds Blade_socket_tube_Ti_6x7p5_bonded (6 / 7.5 mm, z -26.5 to -9.5, closed end, inner face fitted to the stock with its flat, 1.25 g) and Blade_lock_setscrew_M2p5_cone_Ti (0.04 g, trimmed flush by Setscrew_flush_with_root); Stock_tip_flat_0p5_z-26_to_-22; Blade_root_bore_d7p5_and_screw_hole (blade 16.31 -> 15.80 g); Socket_tube_M2p5_thread. No interference among stock, tube, screw, blade and tiller; tube 6.0 mm or more from every cassette part.
+- rudder_joint.py (new): contact couple 536 N, stock at the socket mouth 3.6x (unchanged), flat 13.8x (5.3x if it started at z -19), tube alone 3.5x, set screw about 6 MPa under the 18 N pull.
+- Weight Budget (no formulas touched): row 35 removable blade 20.2 g (low 17.3, high 24.3) at x 15.0, z -117.8 (was 19.4 g at x 14.8, z -121.2); lead 2 x 35.5 -> 2 x 35.1 g (70.2 g); A2 and A18 notes. Read back: total 2800.0 g, rudder assembly 167.4 g, CG x 484.35, z 2.87. cg_layout.py row 35 and SHEET_CG 484.355 / 2.874 reproduce it: static margin 11.9%, T-foil at 10 kt -2.68 N; lead to x 784 to reach 490.7 mm. opt.X_CG stays 0.4846 (0.2 mm; the aft move lowers the rudder load slightly, so the 0.03 N top-reach margin does not shrink).
+- Specs 00 (new PROPOSED row), 04-05 (new removable-blade note), 01-02, 08, 09-10 and the README take it.
+- Fusion: after this save the application reports it is working offline (Application.isOffLine). That explains why the document has read version 30 since the removable-wing save: the saves since then (removable rake pin, then the arm socket with the pin removed, then this blade) are held locally and are not in the cloud until Fusion goes back online.
+

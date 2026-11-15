@@ -37,7 +37,7 @@ WB = [
     (32, 'Cant motor drivers x2', 6.0, 470.0, 20.0, 'fixed'),
     (33, 'Pivot bulkheads x2', 88.4, 531.3, 23.0, 'fixed'),
     (34, 'Rudder stock, collar and cap', 29.2, 20.0, 26.0, 'fixed'),
-    (35, 'Rudder blade (240 mm, 34->20 mm taper, solid tip plug below 200 mm; Hull_v2 version 26)', 19.4, 14.8, -121.2, 'fixed'),
+    (35, 'Rudder blade, removable (240 mm, 34->20 mm taper, solid tip plug, Ti socket tube, set screw)', 20.2, 15.0, -117.8, 'fixed'),
     (36, 'Rudder T-foil', 7.2, 16.0, -260.2, 'fixed'),
     (37, 'Rudder rake actuator (AGF A50BHLW, rev B)', 55.9, 69.2, 4.8, 'fixed'),
     (38, 'Rudder steering (Savox SW-0250MG, rev B)', 34.9, 55.5, 10.3, 'fixed'),
@@ -74,7 +74,7 @@ WB = [
     (69, 'Fasteners', 15.0, 480.0, 15.0, 'fixed'),
     (70, 'Lead ballast, two blocks between the pivot bulkheads', None, 531.4, -30.0, 'lead'),
 ]
-SHEET_CG = (484.501, 2.875)   # Weight Budget row 18 on 15 Nov 2026 (removable wing and arm root; 484.495, 2.565 with the wing only; 484.626, 4.686 on 14 Nov with the sensor at x 800; 481.749, 4.604 on 5 Nov)
+SHEET_CG = (484.355, 2.874)   # Weight Budget row 18 on 15 Nov 2026 (removable wing, arm root and rudder blade; 484.501, 2.875 before the blade; 484.495, 2.565 with the wing only; 484.626, 4.686 on 14 Nov with the sensor at x 800; 481.749, 4.604 on 5 Nov)
 
 
 def rig_x(row, x_m):
