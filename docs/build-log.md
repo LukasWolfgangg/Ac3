@@ -153,3 +153,10 @@ Lukas (15 Nov 2026): finish the modularity; use the rake pin; side panel; then t
 - Save: Fusion reported the save as successful, but the document still reads version 30 and a fresh lookup of the file fails ('file not found'), so Fusion is probably offline with the upload pending; the version number is not confirmed (the earlier rake-pin save did not create a version either).
 - Specs 00 (new PROPOSED row) and 03 (new bullet). Not done: the Weight Budget (about +20 g for the pair, lead about 91 -> 71 g) waits for Lukas's OK; the hull slot and withdrawal path wait for the hull shell.
 
+## 15 Nov 2026 - Weight Budget and CG for the removable arm root
+
+Lukas (15 Nov 2026): update the sheet.
+- Weight Budget (no formulas touched): row 27 is now the rev F rake fork with its Ti socket (41.2 g), the bonded insert (9.8 g) and two M4 Ti bolts (1.5 g): 52.4 g per side (low 50.2, high 57.6) at x 532.6, z 19.6 from Hull_v2 (was 42.2 g at x 532.7, z 21.3); row 70 lead 2 x 45.7 -> 2 x 35.5 g (71.0 g, -20.4 g, to hold 2800 g; volume note 6.3 cm3); A2 and A18 notes. The carbon arm's two clearance holes (-0.05 g) are left out. Read back: total 2800.0 g, foils and arms 1469.6 g, CG x 484.50, z 2.88 (from 484.50, 2.56).
+- cg_layout.py: row 27 and SHEET_CG 484.501 / 2.875; it reproduces the sheet. Static margin 11.9%, T-foil force at 10 kt -2.69 N (unchanged); the lead now moves the CG only 2.5 mm per 100 mm, and putting the CG at 490.7 mm with the lead alone would need it at x 776. opt.X_CG stays 0.4846.
+- Specs 00, 01-02, 03, 08, 09-10 and the README take the new lead and CG. The lead now covers only about 2.6% of the rest of the boat; Lukas (15 Nov 2026): the boat will go over 2800 g, finish the modularity first.
+
